@@ -82,8 +82,8 @@ document.querySelectorAll('input')[2].addEventListener('click', function (event)
 										for (let i = 0; i < lengthMessages; i++) 
 										{
 
-											fieldBlock.push(new Div (document.querySelector('.field'), '.fieldBlock', listMessages[`id${i}`]));
-											
+											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`)? '.myFieldBlock':'.fieldBlock', listMessages[`id${i}`]));
+											console.log(login, `${listMessages[`message${i}`]}`)											
 											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`login${i}`]}`;
 											addClass(p, i, listMessages, login, "myLogin")
