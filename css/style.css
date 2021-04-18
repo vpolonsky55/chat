@@ -1,0 +1,75 @@
+body
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #333;
+}
+.field
+{
+	width: 400px;
+	min-height: 400px;
+	background: lightblue;
+	display: flex;
+	flex-direction: column;
+	
+}
+.textarea
+{
+	width: 400px;
+	height: 15%;
+	margin: auto;
+
+}
+.myMessage
+{
+	width: 100%;
+	text-align: right;
+	color: red;
+	font-size: 12;
+}
+.anotherMessage
+{
+	width: 100%;
+	text-align: left;
+}
+.myLogin
+{
+	color: red;
+}
+.anotherLogin
+{
+	color: green;
+}
+.fieldBlock
+{
+	width: 70%;
+	border: 1px solid blue;
+	border-radius: 30% 5% 30% 5%;
+	background: radial-gradient(#e66465, #9198e5);
+	padding: 1%;
+}
+.myFieldBlock
+{
+	width: 51%;
+	border: 1px solid blue;
+	border-radius: 30% 5% 30% 5%;
+	background: radial-gradient(#4fefaf, #abcdef);
+	align-self: self-end;
+}
+.date
+{
+	color: orange;
+	font-size: 10px;
+	text-align: right;
+}
+.printField
+{
+	width: 20px,
+	height: 10px;
+	border: solid 2px red;
+}
+.printFieldActive
+{
+
+}
