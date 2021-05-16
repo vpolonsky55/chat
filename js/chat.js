@@ -193,7 +193,7 @@ let loop = setInterval(function()
 	if(click)
 	{
 		setInterval("chatUpdate()", 1000)
-		setTimeout(() => document.querySelector("body").scrollIntoView(false), 1500)
+		setTimeout(() => document.querySelector("body").scrollIntoView(false), 1400)
 		clearInterval(loop)
 	}	
 }, 1000)
