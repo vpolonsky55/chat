@@ -146,7 +146,7 @@ function chatUpdate()
 				}
 				for (let i = 0; i < lengthMessages; i++) 
 				{	
-					fieldBlock.push(new Div (document.querySelector('.field'), '.fieldBlock', massage[`id${i}`]));
+					fieldBlock.push(new Div (document.querySelector('.field'), (login==`${massage[`login${i}`]}`)? '.myFieldBlock':'.fieldBlock', massage[`id${i}`]));
 					console.log(login,  massage[`login${i}`])
 					if (login == massage[`login${i}`]) 
 					{
