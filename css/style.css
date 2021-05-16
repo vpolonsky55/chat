@@ -5,9 +5,12 @@ body
 	align-items: center;
 	background: #333;
 }
+p{
+	font-family: "Arial"
+}
 .field
 {
-	width: 400px;
+	width: 65%;
 	min-height: 400px;
 	background: lightblue;
 	display: flex;
@@ -16,7 +19,7 @@ body
 }
 .textarea
 {
-	width: 400px;
+	width: 65%;
 	height: 15%;
 	margin: auto;
 
@@ -24,8 +27,6 @@ body
 .myMessage
 {
 	width: 100%;
-	text-align: right;
-	color: red;
 	font-size: 12;
 }
 .anotherMessage
@@ -35,7 +36,8 @@ body
 }
 .myLogin
 {
-	color: red;
+	color: blue;
+	font-weight: 700;
 }
 .anotherLogin
 {
@@ -45,21 +47,40 @@ body
 {
 	width: 70%;
 	border: 1px solid blue;
-	border-radius: 30% 5% 30% 5%;
-	background: radial-gradient(#e66465, #9198e5);
+	border-radius: 30px 30px 30px 10px;
+	background: radial-gradient(#64e6c8, #f4f2eb);
 	padding: 1%;
+	margin: 10px;
+}
+/*стиль для логина чужого сообщения*/
+.fieldBlock p:first-child{
+	color: green;
+	font-weight: 700;
+}
+/*стиль для текста чужого сообщения*/
+.fieldBlock p:nth-child(2n){
+
+}
+/*стиль для даты чужого сообщения*/
+.fieldBlock p:last-child {
+	color: blue;
+	font-size: 10px;
+	text-align: right;
 }
 .myFieldBlock
 {
 	width: 51%;
 	border: 1px solid blue;
-	border-radius: 30% 5% 30% 5%;
+	border-radius: 30px 30px 10px 30px;
 	background: radial-gradient(#4fefaf, #abcdef);
 	align-self: self-end;
+	padding: 5px;
+	margin: 10px;
+
 }
 .date
 {
-	color: orange;
+	color: blue;
 	font-size: 10px;
 	text-align: right;
 }
