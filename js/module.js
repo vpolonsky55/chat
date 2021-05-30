@@ -8,6 +8,8 @@ class Div
 		this.selector = selector;
 		this.obj = document.createElement("div");
 		this.id = id;
+		this.classes = [];
+		this.idName = "";
 		if (selector[0] == ".")
 		{
 			this.obj.className = selector.slice(1);
@@ -16,6 +18,7 @@ class Div
 		{
 			this.obj.id = selector.slice(1);
 		}
+
 		parent.appendChild(this.obj);
 	}
 	getMe()
@@ -30,6 +33,17 @@ class Div
 			}
 		)
 	}
+	parseString()
+	{
+		let parse = this.selector.split(" "),
+		this.classes = parse.filter((value)=> value.includes(".")),
+		this.idName = parse.filter((value)=> value.includes("#"))[0];
+		if (this.idName){
+			this.obj.id = this.idName;
+		}
+
+	}
+
 
 }
 class Img

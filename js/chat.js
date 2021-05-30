@@ -150,7 +150,7 @@ function chatUpdate()
 				for (let i = 0; i < lengthMessages; i++) 
 				{	
 					fieldBlock.push(new Div (document.querySelector('.field'), (login==massage[`login${i}`])? '.myFieldBlock':'.fieldBlock', massage[`id${i}`]));
-					console.log(login,  massage[`login${i}`], login==massage[`login${i}`])
+					// console.log(login,  massage[`login${i}`], login==massage[`login${i}`])
 					if (login == massage[`login${i}`]) 
 					{
 						fieldBlock[fieldBlock.length-1].setListener(behavior);
@@ -167,7 +167,8 @@ function chatUpdate()
 						indexForMyBlock = otherI++;
 					}
 
-					console.log("test value",document.querySelectorAll(className)[indexForMyBlock],indexForMyBlock)
+					// console.log("test value",document.querySelectorAll(className)[indexForMyBlock],indexForMyBlock)
+					console.log(massage[`id${i}`])
 					p.push(new P (document.querySelectorAll(className)[indexForMyBlock], '.field__txt'));
 					p[p.length - 1].obj.innerText = `${massage[`login${i}`]}`;
 					addClass(p, i, massage, login, "myLogin")
@@ -180,7 +181,6 @@ function chatUpdate()
 					p.push(new P (document.querySelectorAll(className)[indexForMyBlock], '.field__txt'));
 					p[p.length - 1].obj.innerText = `${massage[`date${i}`]}`;
 					addClass(p, i, massage, login, "date")
-
 				}
 			}
 		}
