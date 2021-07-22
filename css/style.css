@@ -15,6 +15,7 @@ p{
 	background: lightblue;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	
 }
 .textarea
@@ -90,7 +91,69 @@ p{
 	height: 10px;
 	border: solid 2px red;
 }
-.printFieldActive
+.modalBlock
 {
+	position: fixed;
+	top: 0;
+	/*left: 30%;*/
+	border: 1px solid blue;
+	/*border-radius: 30px 30px 10px 30px;*/
+	background: radial-gradient(#4ef0afd4, #abcdefba);
+	width: 100%;
+	height: 100px;	
+	padding: 100vh;
+	box-sizing: border-box;
+	z-index: 1;
+}
+.modWin
+{
+	max-height: 400px;
+	max-width: 400px;
+	position: fixed;
+	top: 50%;
+	right: 50%;
+	transform: translate(50%, -50%);
+	border: 3px solid #91a0c4;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background: radial-gradient(#00f895, #2d85dc);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 2;
+}
 
+.modPrgr
+{
+	display: block;
+	color: #fff;
+	z-index: 3;
+	margin-bottom: 5px;
+}
+.modBtn
+{
+	height: 30px;
+	width: 30px;
+	top: 13px;
+	border-radius: 5px;
+	background: #3b3dc9;
+	border: 1px solid #000;
+	box-sizing: border-box;
+	margin-left: 360px;
+	z-index: 2;
+	align-self: end;
+	margin: 0;
+
+}
+.modTxa
+{
+	height: 256px;
+	width: 352px;
+	top: 77px;
+	border-radius: 5px;
+	background: #fff;
+	border: 2px solid lightgray;
+	box-sizing: border-box;
+	z-index: 2;
 }

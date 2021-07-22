@@ -10,15 +10,7 @@ class Div
 		this.id = id;
 		this.classes = [];
 		this.idName = "";
-		if (selector[0] == ".")
-		{
-			this.obj.className = selector.slice(1);
-		}
-		else if (selector[0] == "#")
-		{
-			this.obj.id = selector.slice(1);
-		}
-
+		this.parseString();
 		parent.appendChild(this.obj);
 	}
 	getMe()
@@ -35,12 +27,15 @@ class Div
 	}
 	parseString()
 	{
-		let parse = this.selector.split(" "),
-		this.classes = parse.filter((value)=> value.includes(".")),
+		let parse = this.selector.split(" ");
+		this.classes = parse.filter((value)=> value.includes("."));
+		this.classes = this.classes.map(value => value.slice(1)).join(" ");
+		this.obj.className = this.classes;
 		this.idName = parse.filter((value)=> value.includes("#"))[0];
 		if (this.idName){
-			this.obj.id = this.idName;
+			this.obj.id = this.idName.slice(1);
 		}
+		//console.log(this.obj.className, this.selector)
 
 	}
 
@@ -140,4 +135,28 @@ class Textarea
 		this.obj.addEventListener(event, behavior)
 	}
 	
+}
+class Modal
+{
+	constructor(parent, selectorBg, selectorWin, selectorP, selectorBtn, selectorTa)
+	{
+		this.bg = new Div(parent, selectorBg);
+		this.window = new Div(this.bg.obj, selectorWin);
+		this.prg = new P(this.window.obj, selectorP);
+		this.btn = new Div(this.window.obj, selectorBtn);
+		this.textarea = new Textarea(this.window.obj, selectorTa);
+	}
+	setText(text)
+	{
+		this.textarea.insertText(text);
+	}
+	modRem()
+	{
+		this.bg.obj.parentNode.removeChild(this.bg.obj);
+	}
+	getText()
+	{
+		return this.textarea.getText();
+	}
+
 }

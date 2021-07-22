@@ -26,7 +26,9 @@ function send(method, url, data)
 }
 function addClass(p, i, listMessages, login, selector)
 {
-	if (listMessages[`login${i}`] == login) 
+	selector = selector.slice(1);
+	let element = p[p.length-1].obj.classList.contains(selector);
+	if ((listMessages[`login${i}`] == login)&&(element)) 
 	{
 		p[p.length-1].obj.classList.add(selector);
 		// console.log('меняем цвет')
@@ -41,38 +43,34 @@ login = "",
 p = [],
 click = 0
 clickWhile = 0; 
-document.querySelectorAll('input')[2].addEventListener('click', function (event) 
-	{
-		click = 1
-		let form = document.querySelector('form'),
+function start(data)
+{
+	let form = document.querySelector('form'),
 		smTh = document.querySelectorAll('input')[0],
 		smTh2 =  document.querySelectorAll('input')[1],
-		data = 'login='+smTh.value+'&something2='+smTh2.value, 
 		query = send('POST', 'http://localhost/chat/chat.php', data);
 		query.then((d) => 
 			{
 				if (document.cookie !== "") 
 				{
 					form.parentElement.removeChild(form);
-					field = new Div(document.body, ".field"),
+					field = new Div(document.body, ".field");
 
 					textarea = new Textarea(document.body, ".textarea");
 					textarea.addEvent("keydown", function(event)
 						{
 							if(event.keyCode == 13)
 							{
-								// console.log("до цикла", field.obj.children.length) // 1 тест на количество дочерних элементов
 								while (field.obj.children.length !== 0) 
 								{
 									field.obj.removeChild(field.obj.firstChild) // удаление всех дочерних элементов в поле
 								}
-								// console.log("после цикла", field.obj.children.length) // 2 тест на количество дочерних элементов
 
 								login = document.cookie.split("=")[1],
 								text = textarea.getText(),
 								data = 'login='+login+'&message='+text, 
 								sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
-								event.preventDefault();
+								event.preventDefault(); /*отключение переноса на следующую строку*/
 								// console.log(sendMessage);
 								sendMessage.then(function(listMessages)  
 									{
@@ -81,8 +79,8 @@ document.querySelectorAll('input')[2].addEventListener('click', function (event)
 									console.log(data)	
 										for (let i = 0; i < lengthMessages; i++) 
 										{
-
-											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`)? '.myFieldBlock':'.fieldBlock', listMessages[`id${i}`]));
+											console.log(listMessage[`id${i}`])
+											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`)? `#${listMessages[`id${i}`]} .myFieldBlock `:`#${listMessages[`id${i}`]} .fieldBlock`));
 											console.log(login, `${listMessages[`message${i}`]}`)											
 											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`login${i}`]}`;
@@ -107,27 +105,25 @@ document.querySelectorAll('input')[2].addEventListener('click', function (event)
 								login = document.cookie.split("=")[1],
 								data = 'login='+login+'&writing=1 ', 
 								sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
-
-
-								
 							}
 						}
 					)
 				}
 			}
 	 	)
+} 
+start('login='+document.cookie.slice("=")[1])
+document.querySelectorAll('input')[2].addEventListener('click', function (event) 
+	{
+		click = 1
+		let data = 'login='+smTh.value+'&something2='+smTh2.value;
+		start(data);
 	}
 )
 function checkWriting()
 {
 	data = 'login='+login+'&writing=1 ', 
 	sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
-}
-function behavior(id, obj)
-{
-	let textMessage = obj.querySelectorAll("p")[1].innerText;
-	textarea.insertText(textMessage);
-
 }
 function chatUpdate()
 {
@@ -141,7 +137,6 @@ function chatUpdate()
 			lengthCurrentMessages = document.querySelectorAll(".field div").length;
 			if(lengthMessages > lengthCurrentMessages)
 			{
-				// console.log(lengthCurrentMessages)
 				while (field.obj.children.length !== 0) 
 				{
 					field.obj.removeChild(field.obj.firstChild) // удаление всех дочерних элементов в поле
@@ -149,12 +144,47 @@ function chatUpdate()
 				
 				for (let i = 0; i < lengthMessages; i++) 
 				{	
-					fieldBlock.push(new Div (document.querySelector('.field'), (login==massage[`login${i}`])? '.myFieldBlock':'.fieldBlock', massage[`id${i}`]));
-					// console.log(login,  massage[`login${i}`], login==massage[`login${i}`])
-					if (login == massage[`login${i}`]) 
+					fieldBlock.push(new Div (document.querySelector('.field'), (login==massage[`login${i}`])? `#id${massage[`id${i}`]} .myFieldBlock `:`#id${massage[`id${i}`]} .fieldBlock`));
+					
+					fieldBlock[i].obj.addEventListener("click", function(event)
 					{
-						fieldBlock[fieldBlock.length-1].setListener(behavior);
+						let idBlock = this.id;
+						// console.log(idBlock)
+						if( (document.querySelector(".modalBlock") == null) && (document.querySelector('#'+this.id).className == "myFieldBlock") )
+						{
+							modalBlock = new Modal(document.querySelector('body'), ".modalBlock", ".modWin", ".modBtn", ".modPrgr", ".modTxa");
+							document.querySelector(".modPrgr").innerText = "редактирование сообщения";
+							let text = this.querySelectorAll("p")[1].innerText;
+							modalBlock.setText(text);
+
+							document.querySelector(".modBtn").addEventListener("click", function(e)
+								{
+									/*удаление элементов модального окна*/
+									modalBlock.modRem();
+								}
+							)
+							modalBlock.textarea.obj.addEventListener('keydown', function(e)
+								{
+									if(e.keyCode == 13)
+									{
+										let	login = document.cookie.split("=")[1],
+										changeText = modalBlock.getText(),
+										edit = 1,
+										data = 'login='+login+'&message='+changeText+'&edit='+edit+'&id='+idBlock.slice(2);
+										sendChMessage = send('POST', 'http://localhost/chat/chat.php', data);
+
+										sendChMessage.then(function(chMes)  
+											{
+												document.querySelector("#"+idBlock).querySelectorAll("p")[1].innerText = changeText;
+											}
+										)
+										modalBlock.modRem();
+									}
+								}
+							)							
+						}
 					}
+					)
 					let className = '.fieldBlock';
 					if (document.querySelectorAll('.fieldBlock')[otherI]===undefined)
 					{
@@ -168,7 +198,7 @@ function chatUpdate()
 					}
 
 					// console.log("test value",document.querySelectorAll(className)[indexForMyBlock],indexForMyBlock)
-					console.log(massage[`id${i}`])
+					// console.log(massage[`id${i}`])
 					p.push(new P (document.querySelectorAll(className)[indexForMyBlock], '.field__txt'));
 					p[p.length - 1].obj.innerText = `${massage[`login${i}`]}`;
 					addClass(p, i, massage, login, "myLogin")
