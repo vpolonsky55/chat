@@ -1,3 +1,41 @@
+let smiles = {
+	":)":"😀",
+	":D":"😁",
+},
+screen = {
+	":)" : /:\)/,
+	":D":":D",
+},
+retEm={};
+function createReplace(){
+	let keys = Object.keys(smiles),
+	values = Object.values(smiles);
+	for (let i = keys.length-1; i >= 0; i--) 
+	{
+		retEm[values[i]] = keys[i];
+	}
+}
+createReplace();
+function replaceSmile(mess, arg){
+
+
+	 if (arg) 
+	 {
+		for (let smileChar in smiles)
+		{
+		 		mess = mess.replace(new RegExp (screen[smileChar], 'g'), smiles[smileChar])
+		}
+ 	}
+ 	else
+	{
+		for (let smileChar in retEm)
+		{
+		 console.log(smileChar)
+	 		mess = mess.replace(new RegExp (smileChar, 'g'), retEm[smileChar])
+		}
+	}
+	 return mess
+}
 function send(method, url, data)
 {
 	return new Promise((resolve, reject) => 
@@ -55,7 +93,7 @@ function start(data)
 				{
 					form.parentElement.removeChild(form);
 					field = new Div(document.body, ".field");
-
+					console.log(data)
 					textarea = new Textarea(document.body, ".textarea");
 					textarea.addEvent("keydown", function(event)
 						{
@@ -112,11 +150,15 @@ function start(data)
 			}
 	 	)
 } 
-start('login='+document.cookie.slice("=")[1])
+document.body.onload = start(document.cookie)
 document.querySelectorAll('input')[2].addEventListener('click', function (event) 
 	{
 		click = 1
-		let data = 'login='+smTh.value+'&something2='+smTh2.value;
+		let form = document.querySelector('form'),
+		smTh = document.querySelectorAll('input')[0],
+		smTh2 =  document.querySelectorAll('input')[1], 
+		data = 'login='+smTh.value+'&something2='+smTh2.value;
+
 		start(data);
 	}
 )
@@ -155,6 +197,8 @@ function chatUpdate()
 							modalBlock = new Modal(document.querySelector('body'), ".modalBlock", ".modWin", ".modBtn", ".modPrgr", ".modTxa");
 							document.querySelector(".modPrgr").innerText = "редактирование сообщения";
 							let text = this.querySelectorAll("p")[1].innerText;
+							text = replaceSmile(text, 0)
+							console.log(text)
 							modalBlock.setText(text);
 
 							document.querySelector(".modBtn").addEventListener("click", function(e)
@@ -175,7 +219,7 @@ function chatUpdate()
 
 										sendChMessage.then(function(chMes)  
 											{
-												document.querySelector("#"+idBlock).querySelectorAll("p")[1].innerText = changeText;
+												document.querySelector("#"+idBlock).querySelectorAll("p")[1].innerText = replaceSmile(changeText,1);
 											}
 										)
 										modalBlock.modRem();
@@ -205,7 +249,7 @@ function chatUpdate()
 					addClass(fieldBlock, i, massage, login, className)
 					
 					p.push(new P (document.querySelectorAll(className)[indexForMyBlock], '.field__txt'));
-					p[p.length - 1].obj.innerText = `${massage[`message${i}`]}`;
+					p[p.length - 1].obj.innerText = replaceSmile(`${massage[`message${i}`]}`, 1);
 					addClass(p, i, massage, login, "myMessage")
 
 					p.push(new P (document.querySelectorAll(className)[indexForMyBlock], '.field__txt'));
@@ -220,13 +264,14 @@ function chatUpdate()
 let loop = setInterval(function()
 {
 	
-	if(click)
+	if(click || document.cookie != "")
 	{
 		setInterval("chatUpdate()", 1000)
 		setTimeout(() => document.querySelector("body").scrollIntoView(false), 1400)
 		clearInterval(loop)
 	}	
 }, 1000)
+
 // сформировать сообщение, когда кто-то набирает текст
  
  
