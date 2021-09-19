@@ -23,6 +23,10 @@
 	?>
 
 <script type="text/javascript" src="js/module.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/variables.js"></script>
+<script type="text/javascript" src="js/start.js"></script>
+<script type="text/javascript" src="js/chatUpdate.js"></script>
 <script type="text/javascript" src="js/chat.js"></script>
 </body>
 </html>

@@ -23,6 +23,12 @@ p{
 	width: 65%;
 	height: 15%;
 	margin: auto;
+	box-sizing: border-box;
+	background: linear-gradient(#64e6c8, #f4f2eb);
+	border: none;
+	outline: none;
+	border: 4px ridge lightblue;
+
 
 }
 .myMessage
@@ -48,7 +54,7 @@ p{
 {
 	width: 70%;
 	border: 1px solid blue;
-	border-radius: 30px 30px 30px 10px;
+	border-radius: 14px 14px 14px 0px;
 	background: radial-gradient(#64e6c8, #f4f2eb);
 	padding: 1%;
 	margin: 10px;
@@ -64,20 +70,34 @@ p{
 }
 /*стиль для даты чужого сообщения*/
 .fieldBlock p:last-child {
-	color: blue;
-	font-size: 10px;
+	color: #8000ff;
+	font-size: 7px;
 	text-align: right;
 }
 .myFieldBlock
 {
 	width: 51%;
 	border: 1px solid blue;
-	border-radius: 30px 30px 10px 30px;
+	border-radius: 14px 14px 14px 0px;
 	background: radial-gradient(#4fefaf, #abcdef);
 	align-self: self-end;
 	padding: 5px;
 	margin: 10px;
+}
+/*стиль для логина своего сообщения*/
+.myFieldBlock p:first-child{
+	color: #2511b3;
+	font-weight: 700;
+}
+/*стиль для текста своего сообщения*/
+.myFieldBlock p:nth-child(2n){
 
+}
+/*стиль для даты своего сообщения*/
+.myFieldBlock p:last-child {
+	color: #8000ff;
+	font-size: 7px;
+	text-align: right;
 }
 .date
 {
