@@ -10,6 +10,7 @@ function start(data)
 				if (document.cookie !== "") 
 				{
 					form.parentElement.removeChild(form);
+					avatar = new Avatar(document.body, ".avatar", ".avatarDet", ".avatarSum", ".avatarImg", ".avatarItem")
 					field = new Div(document.body, ".field");
 					textarea = new Textarea(document.body, ".textarea");
 					textarea.addEvent("keydown", function(event)

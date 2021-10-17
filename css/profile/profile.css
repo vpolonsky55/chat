@@ -1,0 +1,23 @@
+.profileBody{
+	background: skyblue;
+}
+.profileImg{
+	width: 500px;
+	height: 500px;
+}
+.profileForm{
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+.profileFormBlock{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.profileTxtLogin{
+	text-align: center;
+	font-size: 24px;
+}
+

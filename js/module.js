@@ -136,6 +136,77 @@ class Textarea
 	}
 	
 }
+class Element
+{
+  constructor(parent, elementType, selector, id=0)
+  {
+    this.parent = parent;
+    this.selector = selector;
+    this.obj = document.createElement(elementType);
+    this.id = id;
+    this.classes = [];
+    this.idName = "";
+    this.parseString();
+    parent.appendChild(this.obj);
+  }
+  parseString()
+  {
+    let parse = this.selector.split(" ");
+    this.classes = parse.filter((value)=> value.includes("."));
+    this.classes = this.classes.map(value => value.slice(1)).join(" ");
+    this.obj.className = this.classes;
+    this.idName = parse.filter((value)=> value.includes("#"))[0];
+    if (this.idName)
+    {
+      this.obj.id = this.idName.slice(1);
+    }
+    //console.log(this.obj.className, this.selector)
+  }
+  getMe()
+  {
+    return this.obj
+  }
+}
+class Link
+{
+  constructor(parent, selector, href, id=0)
+  {
+    this.parent = parent;
+    this.selector = selector;
+    this.obj = document.createElement("a");
+    this.id = id;
+    this.classes = [];
+    this.idName = "";
+    this.obj.href = href;
+    this.parseString();
+    parent.appendChild(this.obj);
+  }
+  parseString()
+  {
+    let parse = this.selector.split(" ");
+    this.classes = parse.filter((value)=> value.includes("."));
+    this.classes = this.classes.map(value => value.slice(1)).join(" ");
+    this.obj.className = this.classes;
+    this.idName = parse.filter((value)=> value.includes("#"))[0];
+    if (this.idName)
+    {
+      this.obj.id = this.idName.slice(1);
+    }
+  }
+   insertText(text)
+  {
+    this.obj.innerText = text;
+    this.text = text;
+  }
+  getText()
+  {
+    return this.text
+  }
+  getMe()
+  {
+    return this.obj
+  }
+}
 class Modal
 {
 	constructor(parent, selectorBg, selectorWin, selectorP, selectorBtn, selectorTa)
@@ -159,4 +230,21 @@ class Modal
 		return this.textarea.getText();
 	}
 
+}
+class Avatar
+{
+	constructor(parent, selectorAv, selectorDet, selectorSum, selectorImg, selectorLink)
+	{
+		this.block=new Div(parent, selectorAv);
+		this.details = new Element(this.block.obj, "details", selectorDet);
+		this.summary = new Element(this.details.obj, "summary", selectorSum);
+		this.img = new Img(this.summary.obj, selectorImg, "https://bipbap.ru/wp-content/uploads/2017/04/98a100e2d18a90c190b2c2b9ca4.jpg");
+		this.profile = new Link(this.details.obj, selectorLink, "http://localhost/chat/profile.php");
+		this.profile.insertText("Профиль");
+		this.setings = new Link(this.details.obj, selectorLink, "");
+		this.setings.insertText("Настройки");
+		this.exit = new Link(this.details.obj, selectorLink, "");
+		this.exit.insertText("Выход");
+
+	}
 }

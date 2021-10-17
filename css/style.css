@@ -1,3 +1,4 @@
+@import "profile/profile.css";
 body
 {
 	display: flex;
@@ -176,4 +177,45 @@ p{
 	border: 2px solid lightgray;
 	box-sizing: border-box;
 	z-index: 2;
+}
+
+/*стили для аватарки*/
+
+.avatar{
+	top: 20px;
+	right: 50px;
+	position: fixed;
+	width: 100px;
+}
+.avatar details{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+img{
+	border: 1px solid red;
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+
+}
+.avatar a{
+	display: block;
+	border: 1px solid gray;
+	text-decoration: none;
+	background: white;
+	color: black;
+	padding: 3px;
+	font-family: "Arial";
+}
+.avatar a:hover{
+	background: black;
+	color: white;
+}
+
+details > summary {
+	display: flex;
+	list-style: none;
+	justify-content: center;
+  	list-style: none;
 }
