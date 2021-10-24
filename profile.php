@@ -9,10 +9,12 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>  
 <body class="profileBody">
+	<!-- загрузка файлов методом Post 
+		следует убедиться, что форма загрузки имеет атрибут enctype="multipart/form-data" , в противном случае загрузка файлов на сервер не произойдёт. -->
 	<form class="profileForm" method="POST" enctype="multipart/form-data">
 		<div class="profileFormBlock">
 			<img class="profileImg" src="">
-			<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+			<input type="hidden" name="MAX_FILE_SIZE" value="300000" />
 			<input type="file" name="avatarImage">
 		</div>
 
@@ -31,18 +33,19 @@
 <!-- обеспечиваем процесс загрузки -->
 
 	<?php
-	// $uploaddir (куда загружать) 
-		// указываем физический путь на диске куда задолжен загрузиться файл
+		// $uploaddir (куда загружать) 
+			// указываем физический путь на диске куда задолжен загрузиться файл
 		$uploaddir = 'C:\MAMP\htdocs\chat\img';
-	// $uploadfile состоит из uploaddir, который связывается с basename 
-		// name - имя файла, которое храниться непосредственно у клиента (зарезервировано не меняем)
-		// basename - специальная функция, которая вытаскивает название этого файла
-		// avatarImage - userName взято из атрибута input 
+		// $uploadfile состоит из uploaddir, который связывается с basename 
+			// name - имя файла, которое храниться непосредственно у клиента (зарезервировано не меняем)
+			// basename - специальная функция, которая вытаскивает название этого файла
+			// avatarImage - userName взято из атрибута input 
 		$uploadfile = $uploaddir . basename($_FILES['avatarImage']['name']);
 
 		echo '<pre>';
 		// проверка загрузился ли этот файл и если этот файл есть (true) он перекидывается в директорию $uploadfile с тем названием, который указан в том что вытащила функция basename
-		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+		readfile($_FILES['userfile']['tmp_name']);
+		if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
 		    echo "Файл корректен и был успешно загружен.\n";
 		} else {
 		    echo "Возможная атака с помощью файловой загрузки!\n";
