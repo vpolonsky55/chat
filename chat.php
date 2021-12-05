@@ -9,7 +9,7 @@ if ($link == false)
     $arr = array('a' => mysqli_connect_error(), 'b' => $_POST['something2'], 'c' => mysqli_connect_error(), 'd' => 4, 'e' => 5);
 	echo json_encode($arr);
 
-    // print("Ошибка: Невозможно подключиться к MySQL " . mysqli_connect_error());
+    print("Ошибка: Невозможно подключиться к MySQL " . mysqli_connect_error());
 
 }
 else 
