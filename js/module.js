@@ -1,13 +1,14 @@
-
-
 class Div
 {
-	constructor(parent, selector, id=0)
+	constructor(parent, selector, id=0, value="None")
 	{
+		//console.log(value)
 		this.parent = parent;
 		this.selector = selector;
 		this.obj = document.createElement("div");
 		this.id = id;
+		this.value=value;
+		this.obj.value=this.value;
 		this.classes = [];
 		this.idName = "";
 		this.parseString();
@@ -38,7 +39,10 @@ class Div
 		//console.log(this.obj.className, this.selector)
 
 	}
-
+	getValue()
+	{
+		return this.value;
+	}
 
 }
 class Img

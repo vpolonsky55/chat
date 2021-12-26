@@ -31,9 +31,11 @@ function start(data)
 									{
 										textarea.obj.value = null;
 										let lengthMessages = Object.keys(listMessages).length/4; //делим на 4 так как появился еще одно поле id
-										for (let i = 0; i < lengthMessages; i++) 
-										{
-											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`)? `#${listMessages[`id${i}`]} .myFieldBlock `:`#${listMessages[`id${i}`]} .fieldBlock`));
+
+										for (let i = lengthMessages-16; i < lengthMessages; i++) 
+										{	
+											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`) ?`#${listMessages[`id${i}`]} .myFieldBlock `:`#${listMessages[`id${i}`]} .fieldBlock`, massage[`id${i}`], listMessages[`id${i}`]));
+											console.log(document.querySelectorAll('.fieldBlock')[i],i)
 											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`login${i}`]}`;
 											addClass(p, i, listMessages, login, "myLogin")

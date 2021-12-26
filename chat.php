@@ -14,6 +14,7 @@ if ($link == false)
 }
 else 
 {
+	// isset() — определяет, была ли установлена переменная c с данным значением
 	if(isset($_POST['login']) && !isset($_POST['message']) && !isset($_POST['writing']) && !isset($_POST['check_writing']))
 	{
 		$sql = 'insert into user (login, cookie) values("'.$_POST['login'].'", "'.$_POST['login'].'")'; 
@@ -55,7 +56,9 @@ else
 			$arr1 = array( );
 			while ($row = mysqli_fetch_assoc($result)) 
 			{
+				
 				$arr1 += array("login".$i=>$row['login'], "message".$i=>$row['message'], "date".$i=>$row['date'], "id".$i=>$row['id']);
+				
 				$i++;
 			};
 			echo json_encode($arr1);
