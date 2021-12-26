@@ -34,17 +34,17 @@ function start(data)
 
 										for (let i = lengthMessages-16; i < lengthMessages; i++) 
 										{	
-											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`) ?`#${listMessages[`id${i}`]} .myFieldBlock `:`#${listMessages[`id${i}`]} .fieldBlock`, massage[`id${i}`], listMessages[`id${i}`]));
-											console.log(document.querySelectorAll('.fieldBlock')[i],i)
-											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
+											fieldBlock.push(new Div (document.querySelector('.field'), (login==`${listMessages[`message${i}`]}`) ?`#${listMessages[`id${i}`]} .myFieldBlock `:`#${listMessages[`id${i}`]} .fieldBlock`, listMessages[`id${i}`], listMessages[`id${i}`]));
+											indexBlock=i-(lengthMessages-16)
+											p.push(new P (document.querySelectorAll('.fieldBlock')[indexBlock], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`login${i}`]}`;
 											addClass(p, i, listMessages, login, "myLogin")
 											addClass(fieldBlock, i, listMessages, login, "myFieldBlock")
-											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
+											p.push(new P (document.querySelectorAll('.fieldBlock')[indexBlock], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`message${i}`]}`;
 											addClass(p, i, listMessages, login, "myMessage")
 
-											p.push(new P (document.querySelectorAll('.fieldBlock')[i], '.field__txt'));
+											p.push(new P (document.querySelectorAll('.fieldBlock')[indexBlock], '.field__txt'));
 											p[p.length - 1].obj.innerText = `${listMessages[`date${i}`]}`;
 											addClass(p, i, listMessages, login, "date")
 

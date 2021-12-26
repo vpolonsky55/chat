@@ -22,12 +22,12 @@ function chatUpdate()
 				{	
 					fieldBlock.push(new Div (document.querySelector ('.field'),   (login==massage[`login${i}`])  ?  `#id${massage[`id${i}`]} .myFieldBlock `  :  `#id${massage[`id${i}`]} .fieldBlock`,  massage[`id${i}`], massage[`id${i}`] )   );
 					
+						console.log(`#id${massage[`id${i}`]}`)
 
 					// появление модального окна
-					document.querySelector(`#id${fieldBlock[indexBlock].id}`).addEventListener("click", function(event)
+					document.querySelector(`#id${massage[`id${i}`]}`).addEventListener("click", function(event)
 					{
 						let idBlock = this.id;
-						console.log(fieldBlock[indexBlock])
 						if( (document.querySelector(".modalBlock") == null) && (document.querySelector('#'+this.id).className == "myFieldBlock") )
 						{
 							modalBlock = new Modal(document.querySelector('body'), ".modalBlock", ".modWin", ".modBtn", ".modPrgr", ".modTxa");
