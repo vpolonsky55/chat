@@ -1,3 +1,5 @@
+let scrollH
+let counter=0
 function chatUpdate()
 {
 	let data = 'messages=1', 
@@ -95,5 +97,13 @@ function chatUpdate()
 			}
 		}
 	)
+
+	if (counter<2)
+	{
 		setTimeout(() => document.querySelector("body").scrollIntoView(false), 1400)
+		// document.querySelector("body").scrollIntoView(false)
+		counter++
+	}
+	scrollH = window.pageYOffset
+	window.scrollTo(0, scrollH)
 }
