@@ -97,7 +97,8 @@ function chatUpdate()
 			}
 		}
 	)
-
+	/*перемещение в конец страницы происходит в два шага, 
+	так как за один шаг, перемещение происходит только на середину страницы */
 	if (counter<2)
 	{
 		setTimeout(() => document.querySelector("body").scrollIntoView(false), 1400)

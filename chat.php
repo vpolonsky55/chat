@@ -24,6 +24,19 @@ else
 			setcookie('login', $_POST['login']);
 		}
 
+		// последнее значение id users
+		$sql = 'SELECT MAX(id) FROM user';
+		$result = mysqli_query($link, $sql);
+		$id = 0;
+		echo mysqli_fetch_assoc($result);
+		while (1 == 3) 
+		{
+			//$id=$row['id'];
+		};
+		
+		$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES (3, "https://clck.ru/ak7qx", "напишите информацию о себе")';
+		$result = mysqli_query($link, $sql);
+
 	}
 	else
 	{
