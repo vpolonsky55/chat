@@ -24,19 +24,32 @@ else
 			setcookie('login', $_POST['login']);
 		}
 
-		// последнее значение id users
-		$sql = 'SELECT MAX(id) FROM user';
+		// последнее значение id users 
+		$sql = 'SELECT MAX(id) as id FROM user';
 		$result = mysqli_query($link, $sql);
-		$id = 0;
-		echo mysqli_fetch_assoc($result);
-		while (1 == 3) 
+		while ($row = mysqli_fetch_assoc($result)) {
+			$id = $row["id"];
+		}
+		$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
+		$result = mysqli_query($link, $sql);
+		if(isset($_POST['login']) && isset($_POST['getidfromdb']))
 		{
-			//$id=$row['id'];
-		};
-		
-		$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES (3, "https://clck.ru/ak7qx", "напишите информацию о себе")';
-		$result = mysqli_query($link, $sql);
-
+			$sql = 'SELECT id FROM `user` WHERE login = "'.$_POST['login'].'"';
+			$result = mysqli_query($link, $sql);
+			while ($row = mysqli_fetch_assoc($result)) 
+			{
+				echo $row["id"]; 
+			}
+		}
+		if(isset($_POST['login']) && isset($_POST['geturlavatar']))
+		{
+			$sql = 'SELECT url FROM `user_info` WHERE user = '.$_POST['geturlavatar'].'';
+			$result = mysqli_query($link, $sql);
+			while ($row = mysqli_fetch_assoc($result)) 
+			{
+				echo $row["url"]; 
+			}
+		}
 	}
 	else
 	{

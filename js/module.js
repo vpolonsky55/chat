@@ -237,18 +237,42 @@ class Modal
 }
 class Avatar
 {
-	constructor(parent, selectorAv, selectorDet, selectorSum, selectorImg, selectorLink)
+	constructor(parent, selectorAv, selectorDet, selectorSum, selectorImg, selectorLink, login)
 	{
+		this.url = ""
+		this.login=login;
+		this.getIdFromDB(this.login)
 		this.block=new Div(parent, selectorAv);
 		this.details = new Element(this.block.obj, "details", selectorDet);
 		this.summary = new Element(this.details.obj, "summary", selectorSum);
-		this.img = new Img(this.summary.obj, selectorImg, "https://bipbap.ru/wp-content/uploads/2017/04/98a100e2d18a90c190b2c2b9ca4.jpg");
+		this.img = new Img(this.summary.obj, selectorImg, this.url);
 		this.profile = new Link(this.details.obj, selectorLink, "http://localhost/chat/profile.php");
 		this.profile.insertText("Профиль");
 		this.setings = new Link(this.details.obj, selectorLink, "");
 		this.setings.insertText("Настройки");
 		this.exit = new Link(this.details.obj, selectorLink, "");
 		this.exit.insertText("Выход");
+		// SELECT id FROM `user` WHERE login = "log" 
 
 	}
+	getIdFromDB(login)
+	{
+		let data = 'login='+login+'&getidfromdb=1', 
+		sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
+		sendMessage.then(function(listMessages)
+		{
+			let url = (id) =>
+			{
+				let data = 'login='+login+'&geturlavatar='+id, 
+				sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
+				sendMessage.then(function(link)
+				{
+					this.url = link ;
+				})
+			}
+			url(listMessages)
+			
+		})
+	}
+	
 }

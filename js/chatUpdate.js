@@ -24,7 +24,6 @@ function chatUpdate()
 				{	
 					fieldBlock.push(new Div (document.querySelector ('.field'),   (login==massage[`login${i}`])  ?  `#id${massage[`id${i}`]} .myFieldBlock `  :  `#id${massage[`id${i}`]} .fieldBlock`,  massage[`id${i}`], massage[`id${i}`] )   );
 					
-						console.log(`#id${massage[`id${i}`]}`)
 
 					// появление модального окна
 					document.querySelector(`#id${massage[`id${i}`]}`).addEventListener("click", function(event)
