@@ -259,13 +259,15 @@ class Avatar
 	{
 		let data = 'login='+login+'&getidfromdb=1', 
 		sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
-		sendMessage.then(function(listMessages)
+		sendMessage.then((listMessages) =>
 		{
+			console.log(this)
 			let url = (id) =>
 			{
 				let data = 'login='+login+'&geturlavatar='+id, 
 				sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
-				sendMessage.then(function(link)
+				
+				sendMessage.then((link) =>
 				{
 					this.url = link ;
 				})
