@@ -45,7 +45,7 @@ function send(method, url, data)
 				let xhr = new XMLHttpRequest()
 				xhr.open(method, url, true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				xhr.responseType = "json"
+				xhr.responseType = "json";
 				xhr.onload = () => 
 				{
 					if(xhr.status == 400)

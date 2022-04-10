@@ -15,30 +15,33 @@ if ($link == false)
 else 
 {
 	// isset() — определяет, была ли установлена переменная c с данным значением
-	if(isset($_POST['login']) && !isset($_POST['message']) && !isset($_POST['writing']) && !isset($_POST['check_writing']))
+	if(isset($_POST['login']) && !isset($_POST['message']) && !isset($_POST['writing']) && !isset($_POST['check_writing']) && !isset($_POST['getidfromdb']))
 	{
-		$sql = 'insert into user (login, cookie) values("'.$_POST['login'].'", "'.$_POST['login'].'")'; 
-		$result = mysqli_query($link, $sql);
-		if($_POST["login"] != "")
+		if( !isset($_POST['geturlavatar']))
 		{
-			setcookie('login', $_POST['login']);
-		}
-
-		// последнее значение id users 
-		$sql = 'SELECT MAX(id) as id FROM user';
-		$result = mysqli_query($link, $sql);
-		while ($row = mysqli_fetch_assoc($result)) {
-			$id = $row["id"];
-		}
-		$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
-		$result = mysqli_query($link, $sql);
-		if(isset($_POST['login']) && isset($_POST['getidfromdb']))
-		{
-			$sql = 'SELECT id FROM `user` WHERE login = "'.$_POST['login'].'"';
+			$sql = 'insert into user (login, cookie) values("'.$_POST['login'].'", "'.$_POST['login'].'")'; 
 			$result = mysqli_query($link, $sql);
-			while ($row = mysqli_fetch_assoc($result)) 
+			if($_POST["login"] != "")
 			{
-				echo $row["id"]; 
+				setcookie('login', $_POST['login']);
+			}
+
+			// последнее значение id users 
+			$sql = 'SELECT MAX(id) as id FROM user';
+			$result = mysqli_query($link, $sql);
+			while ($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+			}
+			$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
+			$result = mysqli_query($link, $sql);
+			if(isset($_POST['login']) && isset($_POST['getidfromdb']))
+			{
+				$sql = 'SELECT id FROM `user` WHERE login = "'.$_POST['login'].'"';
+				$result = mysqli_query($link, $sql);
+				while ($row = mysqli_fetch_assoc($result)) 
+				{
+					echo $row["id"]; 
+				}
 			}
 		}
 		if(isset($_POST['login']) && isset($_POST['geturlavatar']))
