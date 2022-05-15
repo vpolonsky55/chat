@@ -36,7 +36,7 @@ function replaceSmile(mess, arg){
 	}
 	 return mess
 }
-function send(method, url, data)
+function send(method, url, data, type="json")
 {
 	return new Promise((resolve, reject) => 
 		{
@@ -45,7 +45,7 @@ function send(method, url, data)
 				let xhr = new XMLHttpRequest()
 				xhr.open(method, url, true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				xhr.responseType = "json";
+				xhr.responseType = type;
 				xhr.onload = () => 
 				{
 					if(xhr.status == 400)

@@ -19,6 +19,7 @@ else
 	{
 		if( !isset($_POST['geturlavatar']))
 		{
+			$switch_user_info = 1;
 			$sql = 'insert into user (login, cookie) values("'.$_POST['login'].'", "'.$_POST['login'].'")'; 
 			$result = mysqli_query($link, $sql);
 			if($_POST["login"] != "")
@@ -32,8 +33,12 @@ else
 			while ($row = mysqli_fetch_assoc($result)) {
 				$id = $row["id"];
 			}
-			$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
-			$result = mysqli_query($link, $sql);
+			if ($switch_user_info==1)
+			{
+				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
+				$result = mysqli_query($link, $sql);
+				$switch_user_info = 0;
+			}	
 			if(isset($_POST['login']) && isset($_POST['getidfromdb']))
 			{
 				$sql = 'SELECT id FROM `user` WHERE login = "'.$_POST['login'].'"';
