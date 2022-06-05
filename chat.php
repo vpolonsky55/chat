@@ -33,11 +33,17 @@ else
 			while ($row = mysqli_fetch_assoc($result)) {
 				$id = $row["id"];
 			}
-			if ($switch_user_info==1)
+
+			$sql = 'SELECT count(user) as count FROM user_info where user='.$id.'';
+			$result = mysqli_query($link, $sql);
+			while ($row = mysqli_fetch_assoc($result)) {
+				$switch_user_info = $row["count"];
+			}
+
+			if ($switch_user_info==0)
 			{
 				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
 				$result = mysqli_query($link, $sql);
-				$switch_user_info = 0;
 			}	
 			if(isset($_POST['login']) && isset($_POST['getidfromdb']))
 			{

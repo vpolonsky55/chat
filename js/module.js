@@ -245,6 +245,7 @@ class Avatar
 		this.block=new Div(parent, selectorAv);
 		this.details = new Element(this.block.obj, "details", selectorDet);
 		this.summary = new Element(this.details.obj, "summary", selectorSum);
+		this.selectorImg=selectorImg
 		this.img = new Img(this.summary.obj, selectorImg, this.url);
 		this.profile = new Link(this.details.obj, selectorLink, "http://localhost/chat/profile.php");
 		this.profile.insertText("Профиль");
@@ -257,18 +258,19 @@ class Avatar
 	}
 	getIdFromDB(login)
 	{
-		let data = 'login='+login+'&getidfromdb=1', 
-		sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
+		let data = 'login='+login+'&getUserId=1', 
+		sendMessage = send('POST', 'http://localhost/chat/responsejs.php', data);
 		console.log(data)
 		sendMessage.then((listMessages) =>
 		{
 			let url = (id) =>
 			{
-				let data = 'login='+login+'&geturlavatar='+id; 
-				send('POST', 'http://localhost/chat/chat.php', data).then((link) =>
+				console.log(id)
+				let data = 'login='+login+'&getUserUrl='+id; 
+				send('POST', 'http://localhost/chat/responsejs.php', data, "html").then((link) =>
 				{
 					this.url = link ;
-					console.log(data)
+					document.querySelector(this.selectorImg).src=this.url
 				}).catch(function(link) 
 				{
 					console.log(link)
