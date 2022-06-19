@@ -37,7 +37,8 @@
 		   <input type="file" name="avatarImage">
 	    </div>
 		<p class="profileTxtLogin"></p>
-		<textarea type="text" name="selfDescription" placeholder="Расскажите о себе"></textarea>	
+		<p class="profileTxtAbout">Тут должно быть инфо о пользователе</p>
+		<textarea class="selfDescription" type="text" name="description" placeholder="Расскажите о себе"></textarea>	
 		<input type="submit" value="Изменить" name="bt">
 	</form>
 	
@@ -52,7 +53,19 @@
 	// куда загрузить
 	$uploaddir = 'img/avatar/';
 	echo '<pre>';
-	if ($_FILES['avatarImage']['type']=="image/png"){
+	if (isset($_POST['description']) && $_POST['description'] != "") {
+		$login = $_COOKIE["login"];
+		$user_id = -1;
+		$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
+		$result = mysqli_query($link, $sql);
+		while ($row = mysqli_fetch_assoc($result)) {
+				$user_id = $row["id"];
+		}
+		$sql = 'UPDATE `user_info` SET `description`="%s" WHERE user=%d'; 
+		$query=sprintf($sql, $_POST['description'], $user_id);
+		$result = mysqli_query($link, $query);
+	}
+	if (isset($_FILES['avatarImage']['type']) && $_FILES['avatarImage']['type']=="image/png"){
 		$login = $_COOKIE["login"];
 		$format="avatar_%d_%s.png";
 		$user_id = -1;
@@ -66,6 +79,7 @@
 
 		// проверка загрузиться ли файл и если так, то он перекидывается в директорию с тем названием, которое вытащила функция  basename
 		echo $_FILES['avatarImage']['tmp_name']=="image.png";
+
 		if (move_uploaded_file($_FILES['avatarImage']['tmp_name'], $uploadfile)) 
 		{
 		    echo "Файл корректен и был успешно загружен.\n";
@@ -112,15 +126,34 @@
 		{
 			let post = 'login='+logName+'&getUserUrl='+id+'', 
 			getMessage = send('POST', 'http://localhost/chat/responsejs.php', post, "html");
+
 			getMessage.then(function(url)
 				{
-					console.log(url)
+					// console.log(url)
 					document.querySelector(".profileImg").src=url
-					console.log(document.querySelector(".profileImg").src)
+					// console.log(document.querySelector(".profileImg").src)
 				}
 			)
 		}
 	)
+
+	sendMessage.then(function(id)
+		{
+			let post = 'login='+logName+'&getUserDescription='+id+'', 
+			getMessage = send('POST', 'http://localhost/chat/responsejs.php', post, "html");
+
+			getMessage.then(function(description)
+				{
+					console.log(description)
+					document.querySelector(".profileTxtAbout").innerText=description
+					console.log(document.querySelector(".profileTxtAbout").innerText)
+				}
+			)
+		}
+	)
+
+
+
 </script>
 </body>
 </html>

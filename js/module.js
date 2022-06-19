@@ -252,6 +252,11 @@ class Avatar
 		this.setings = new Link(this.details.obj, selectorLink, "");
 		this.setings.insertText("Настройки");
 		this.exit = new Link(this.details.obj, selectorLink, "");
+		this.exit.obj.addEventListener("click", function(event)
+		{
+			document.cookie=""
+			location.reload()
+		})
 		this.exit.insertText("Выход");
 		// SELECT id FROM `user` WHERE login = "log" 
 

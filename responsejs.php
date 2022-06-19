@@ -34,5 +34,17 @@ else
 		}
 		echo $user_url; 
 	}
+
+	
+	if( isset($_POST['login']) && isset($_POST["getUserDescription"]))
+	{
+		$user_description = "";
+		$sql = 'SELECT description FROM `user_info` WHERE user='.$_POST['getUserDescription'].'';
+		$result = mysqli_query($link, $sql);
+		while ($row = mysqli_fetch_assoc($result)) {
+				$user_description = $row["description"];
+		}
+		echo $user_description; 
+	}
 }
 ?>

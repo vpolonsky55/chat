@@ -9,10 +9,17 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>  
 <body>
-	<form method="POST">
-		<input type="text" name="something">
-		<input type="text" name="something2">
-		<input type="button" value="click" name="bt">
+	<form class="startForm" method="POST">
+		<div>
+			<label>Введите логин:</label>
+			<input type="text" name="something">
+		</div>
+		<div>
+			<label>Введите google-аккаунт:</label>
+			<input type="text" name="something2">
+		</div>
+		
+		<input class="frmBtn" type="button" value="click" name="bt">
 	</form>
 	<?php
 		// setcookie('TestCookie', null);

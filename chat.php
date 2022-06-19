@@ -20,12 +20,13 @@ else
 		if( !isset($_POST['geturlavatar']))
 		{
 			$switch_user_info = 1;
-			$sql = 'insert into user (login, cookie) values("'.$_POST['login'].'", "'.$_POST['login'].'")'; 
+			$sql = 'insert into user (login, cookie, token) values("'.$_POST['login'].'", "'.$_POST['login'].'", 1)'; 
 			$result = mysqli_query($link, $sql);
 			if($_POST["login"] != "")
 			{
 				setcookie('login', $_POST['login']);
 			}
+			echo $sql;
 
 			// последнее значение id users 
 			$sql = 'SELECT MAX(id) as id FROM user';
