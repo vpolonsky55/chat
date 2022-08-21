@@ -43,7 +43,7 @@ else
 
 			if ($switch_user_info==0)
 			{
-				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе")';
+				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`, `name`, `family_name`, `email`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе", 1, 1, 1)';
 				$result = mysqli_query($link, $sql);
 			}	
 			if(isset($_POST['login']) && isset($_POST['getidfromdb']))
