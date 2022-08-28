@@ -7,6 +7,7 @@ function start(data)
 		query = send('POST', 'http://localhost/chat/chat.php', data);
 		query.then((d) => 
 			{
+				// если куки не пустые
 				if (document.cookie !== "") 
 				{
 					form.parentElement.removeChild(form);
@@ -65,14 +66,27 @@ function start(data)
 	 	)
 } 
 document.body.onload = start(document.cookie)
-document.querySelectorAll('input')[2].addEventListener('click', function (event) 
-	{
-		click = 1
-		let form = document.querySelector('form'),
-		smTh = document.querySelectorAll('input')[0],
-		smTh2 =  document.querySelectorAll('input')[1], 
-		data = 'login='+smTh.value+'&something2='+smTh2.value;
+window.onload=function()
+{
+		if (document.cookie == "" )
+		{
+			location="http://localhost/chat/auth.php"		
+		} 
+		else
+		{
+			location="http://localhost/chat"		
+			start(data);
+		}
+	
+}
+// document.querySelectorAll('input')[2].addEventListener('click', function (event) 
+// 	{
+// 		click = 1
+// 		let form = document.querySelector('form'),
+// 		smTh = document.querySelectorAll('input')[0],
+// 		smTh2 =  document.querySelectorAll('input')[1], 
+// 		data = 'login='+smTh.value+'&something2='+smTh2.value;
 
-		start(data);
-	}
-)
+// 		start(data);
+// 	}
+// )

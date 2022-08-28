@@ -59,6 +59,7 @@
 						$id = $row["id"];
 					}
 				}else{
+					// берем последнее значение id в таблице user которое должны знать для добавление нового пользователя
 					$sql = 'SELECT MAX(id) as id FROM user';
 					$result = mysqli_query($link, $sql);
 					while ($row = mysqli_fetch_assoc($result)) {

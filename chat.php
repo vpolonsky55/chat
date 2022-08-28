@@ -14,35 +14,41 @@ if ($link == false)
 }
 else 
 {
-	// isset() — определяет, была ли установлена переменная c с данным значением
-	if(isset($_POST['login']) && !isset($_POST['message']) && !isset($_POST['writing']) && !isset($_POST['check_writing']) && !isset($_POST['getidfromdb']))
+	// isset() — определяет, была ли установлена переменная c с данным значением чере post-запрос
+	if(isset($_POST['login']) && !isset($_POST['message']) && !isset($_POST['writing']) && !isset($_POST['check_writing']) && !isset($_POST['getidfromdb'])) //если есть только логин и нет всего остального
 	{
 		if( !isset($_POST['geturlavatar']))
 		{
 			$switch_user_info = 1;
+
+			// создание нового пользователя в таблице user (выполняется 1 раз)
 			$sql = 'insert into user (login, cookie, token) values("'.$_POST['login'].'", "'.$_POST['login'].'", 1)'; 
 			$result = mysqli_query($link, $sql);
+
+			// если логин не пустой, устанавливаем куки
 			if($_POST["login"] != "")
 			{
 				setcookie('login', $_POST['login']);
 			}
 			echo $sql;
 
-			// последнее значение id users 
+			// берем последнее значение id в таблице user которое должны знать для добавление нового пользователя
 			$sql = 'SELECT MAX(id) as id FROM user';
-			$result = mysqli_query($link, $sql);
+			$result = mysqli_query($link, $sql); 
 			while ($row = mysqli_fetch_assoc($result)) {
 				$id = $row["id"];
 			}
 
+			//работаем с переменной switch_user_info
 			$sql = 'SELECT count(user) as count FROM user_info where user='.$id.'';
 			$result = mysqli_query($link, $sql);
 			while ($row = mysqli_fetch_assoc($result)) {
 				$switch_user_info = $row["count"];
 			}
-
+			
 			if ($switch_user_info==0)
 			{
+				// добавление ссылки в user_info
 				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`, `name`, `family_name`, `email`) VALUES ('.$id.', "https://clck.ru/ak7qx", "напишите информацию о себе", 1, 1, 1)';
 				$result = mysqli_query($link, $sql);
 			}	
