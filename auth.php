@@ -48,6 +48,13 @@
 				echo '<p>'.$info["family_name"].'</p>';
 				echo '<p>'.$info["email"].'</p>';
 				echo '<p>'.$info["locale"].'</p>';
+				echo '<p>'.md5($info["email"]).'</p>';
+
+				// echo 'cookie="'.md5($info["email"]).'"';
+				// echo 'login="'.$info['email'].'"';
+				setcookie($info['email'], md5($info["email"]));
+
+				
 				// print_r ($info);
 				// Array ( [id] => 102732370544640287792 [email] => vpolonsky5@gmail.com [verified_email] => 1 [name] => Всеволод Полонский [given_name] => Всеволод [family_name] => Полонский [picture] => https://lh3.googleusercontent.com/a/AItbvmnkrYvRkDNx4kJgDKy0OjbKOd9W3pU3aWxBGQ63=s96-c [locale] => ru ) 
 				$sql= 'INSERT INTO `user`( `login`, `cookie`, `token`) VALUES ("'.$info["email"].'", "'.md5($info["email"]).'", "1")';
@@ -70,8 +77,10 @@
 				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`, `name`, `family_name`, `email`) VALUES ('.$id.', "'.$info["picture"].'", "напишите информацию о себе", "'.$info["name"].'", "'.$info["family_name"].'", "'.$info["email"].'")';
 				$result = mysqli_query($link, $sql);
 
-				echo $sql;
-// SELECT max(id) as id FROM user
+				// echo $sql;
+				header("Location: http://localhost/chat/index.php"); 
+				exit();
+
 			}
 		}
 		else{

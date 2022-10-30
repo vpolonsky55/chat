@@ -3,7 +3,7 @@ let counter=0
 function chatUpdate()
 {
 	let data = 'messages=1', 
-	login = document.cookie.split("=")[1],
+	login = document.cookie.split("=")[0],
 	sendMessage = send('POST', 'http://localhost/chat/chat.php', data),
 	indexForMyBlock = 0, oldMyI = 0, otherI = 0;
 	sendMessage.then(function(massage)
@@ -47,7 +47,7 @@ function chatUpdate()
 								{
 									if(e.keyCode == 13)
 									{
-										let	login = document.cookie.split("=")[1],
+										let	login = document.cookie.split("=")[0],
 										changeText = modalBlock.getText(),
 										edit = 1,
 										data = 'login='+login+'&message='+changeText+'&edit='+edit+'&id='+idBlock.slice(2);

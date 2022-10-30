@@ -1,4 +1,4 @@
-login = document.cookie.split("=")[1];
+login = document.cookie.split("=")[0];
 let profileTxtAbout = document.querySelector(".profileTxtAbout"),
 selfDescription = document.querySelector(".selfDescription");
 

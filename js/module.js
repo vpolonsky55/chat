@@ -36,7 +36,6 @@ class Div
 		if (this.idName){
 			this.obj.id = this.idName.slice(1);
 		}
-		//console.log(this.obj.className, this.selector)
 
 	}
 	getValue()
@@ -66,6 +65,10 @@ class Img
 	getMe()
 	{
 		return this.obj
+	}
+	setUrl(url)
+	{
+		this.obj.src = url;
 	}
 
 }
@@ -254,7 +257,12 @@ class Avatar
 		this.exit = new Link(this.details.obj, selectorLink, "");
 		this.exit.obj.addEventListener("click", function(event)
 		{
-			document.cookie=""
+			while (document.cookie)
+			{
+				let cookie = document.cookie;
+		    	document.cookie = cookie+ "; max-age=-1";
+			}
+			console.log("coockie=", document.cookie)
 			location.reload()
 		})
 		this.exit.insertText("Выход");
@@ -265,12 +273,10 @@ class Avatar
 	{
 		let data = 'login='+login+'&getUserId=1', 
 		sendMessage = send('POST', 'http://localhost/chat/responsejs.php', data);
-		console.log(data)
 		sendMessage.then((listMessages) =>
 		{
 			let url = (id) =>
 			{
-				console.log(id)
 				let data = 'login='+login+'&getUserUrl='+id; 
 				send('POST', 'http://localhost/chat/responsejs.php', data, "html").then((link) =>
 				{
@@ -286,6 +292,10 @@ class Avatar
 				
 			
 		})
+	}
+	setSrc(url)
+	{
+		this.img.setUrl(url);
 	}
 	
 }

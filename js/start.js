@@ -8,12 +8,36 @@ function start(data)
 		query.then((d) => 
 			{
 				// если куки не пустые
-				if (document.cookie !== "") 
+				if (document.cookie !== "") // возможно это условие не очень нужно
 				{
+					//удаление формы 
 					form.parentElement.removeChild(form);
+
 					avatar = new Avatar(document.body, ".avatar", ".avatarDet", ".avatarSum", ".avatarImg", ".avatarItem",smTh.value)
 					field = new Div(document.body, ".field");
 					textarea = new Textarea(document.body, ".textarea");
+					
+
+
+					let loginName = document.cookie.split("=")[0]
+					data = 'login='+loginName+'&getUserId=1 ', 
+					sendMessage = send('POST', 'http://localhost/chat/responsejs.php', data);
+					sendMessage.then(function(id)
+						{
+							let post = 'login='+loginName+'&getUserUrl='+id+'', 
+							getMessage = send('POST', 'http://localhost/chat/responsejs.php', post, "html");
+
+							getMessage.then(function(url)
+								{
+									// console.log(url)
+									document.querySelector(".avatarImg").src=url
+									// console.log(document.querySelector(".profileImg").src)
+								}
+							)
+						}
+					)
+
+					/*Здесь необходимо написать код, который будет подставлять адрес ссылки в метод setSrc*/
 					textarea.addEvent("keydown", function(event)
 						{
 							if(event.keyCode == 13)
@@ -23,7 +47,8 @@ function start(data)
 									field.obj.removeChild(field.obj.firstChild) // удаление всех дочерних элементов в поле
 								}
 
-								login = document.cookie.split("=")[1],
+								
+								login = document.cookie.split("=")[0],
 								text = textarea.getText(),
 								data = 'login='+login+'&message='+text, 
 								sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
@@ -55,28 +80,43 @@ function start(data)
 							} 
 							else if(event.keyCode !== 13)
 							{
-								login = document.cookie.split("=")[1],
+								login = document.cookie.split("=")[0],
 								data = 'login='+login+'&writing=1 ', 
 								sendMessage = send('POST', 'http://localhost/chat/chat.php', data);
 							}
 						}
 					)
 				}
+
 			}
 	 	)
 } 
 document.body.onload = start(document.cookie)
 window.onload=function()
 {
-		if (document.cookie == "" )
+	let cookie = document.cookie.split("="), 
+	login=cookie[0],
+	hesh=cookie[1],
+	data = `login=${login}&cookie=${hesh}`, 
+	sendMessage = send('POST', 'http://localhost/chat/checkUser.php', data);
+	sendMessage.then(function(userExist)
 		{
-			location="http://localhost/chat/auth.php"		
-		} 
-		else
-		{
-			location="http://localhost/chat"		
-			start(data);
+			if(userExist)
+			{
+				start(data)
+			}
 		}
+
+	)
+
+	// if (document.cookie == "vpolonsky5@gmail.com=139c4a43fb5870137f476e7a2a09a6f1" )
+	// {
+	// 	start(data);
+	// } 
+	// else
+	// {
+	// 	location="http://localhost/chat/auth.php"		
+	// }
 	
 }
 // document.querySelectorAll('input')[2].addEventListener('click', function (event) 

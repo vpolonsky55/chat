@@ -119,7 +119,7 @@
 
 
 <script type="text/javascript">
-	let logName = document.cookie.split("=")[1]
+	let logName = document.cookie.split("=")[0]
 	data = 'login='+logName+'&getUserId=1 ', 
 	sendMessage = send('POST', 'http://localhost/chat/responsejs.php', data);
 	sendMessage.then(function(id)

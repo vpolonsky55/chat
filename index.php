@@ -23,10 +23,19 @@
 	</form>
 	<?php
 		// setcookie('TestCookie', null);
-		setcookie('login', null);
+
+		// setcookie('login', null);
+		
+		
 		echo $_COOKIE['TestCookie'];
 
 		echo $_POST['something'].'  '.$_POST['something2'].' '.$_POST['bt'];
+		if (count($_COOKIE) == 0)
+		{
+			header("Location: http://localhost/chat/auth.php"); 
+			exit();
+
+		}
 	?>
 	<div class="content">
 		

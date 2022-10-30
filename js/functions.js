@@ -17,8 +17,6 @@ function createReplace(){
 }
 createReplace();
 function replaceSmile(mess, arg){
-
-
 	 if (arg) 
 	 {
 		for (let smileChar in smiles)
