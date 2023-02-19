@@ -70,15 +70,15 @@
 		$result = mysqli_query($link, $query);
 	}
 	if (isset($_FILES['avatarImage']['type']) && $_FILES['avatarImage']['type']=="image/png"){
-		$login = $_COOKIE["login"]; 
-		$format="avatar_%d_%s.png"; 
+		$login = $_COOKIE["login"];
+		$format="avatar_%d_%s.png";
 		$user_id = -1;
 		$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
 		$result = mysqli_query($link, $sql);
 		while ($row = mysqli_fetch_assoc($result)) {
 				$user_id = $row["id"];
 		}
-
+		
 		$uploadfile = $uploaddir . sprintf($format, $user_id, $login);
 
 		// проверка загрузиться ли файл и если так, то он перекидывается в директорию с тем названием, которое вытащила функция  basename
@@ -88,7 +88,7 @@
 		{
 		    echo "Файл корректен и был успешно загружен.\n";
 		    $sql = 'UPDATE `user_info` SET `url`="%s" WHERE user=%d'; 
-		   $query=sprintf($sql, $uploadfile, $user_id);
+		    $query=sprintf($sql, $uploadfile, $user_id);
 		    echo $query;
 			$result = mysqli_query($link, $query);
 
@@ -103,7 +103,7 @@
 	} 
 	else
 	{
-		echo "Можно загружать изображения только с расширением *.png";
+		echo "Можно загружать изображения только с расширением *.jpg";
 	}
 	print "</pre>";
 	

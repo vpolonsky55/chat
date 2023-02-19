@@ -24,71 +24,66 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>  
-<body class="profileBody">
+<body class="settingsBody">
 
-	<!-- Тип кодирования данных, enctype, ДОЛЖЕН БЫТЬ указан ИМЕННО так -->
-		
-	<!-- загрузка файлов методом Post 
-		следует убедиться, что форма загрузки имеет атрибут enctype="multipart/form-data" , в противном случае загрузка файлов на сервер не произойдёт. -->
-	<form enctype="multipart/form-data" action="" method="POST" class="profileForm">
-	    <div class="profileFormBlock">
+	<div class="settings">
+		<div class="settings__wraper">
+			<h2 class="settings__title">Внешний вид</h2>
+			<div class="property">
+				<p class="property__text">Установить фон</p>
+				<button class="property__button">Изменить</button>
+			</div>
+			<div class="modal__bg">
+
+				<!-- <img class="modal__bg_img" src=""> -->
+				
+			</div>
+		</div>
+		<div class="settings_wraper"></div>
+		<div class="settings_wraper"></div>
+	</div>
+
+	<!-- <form enctype="multipart/form-data" action="" method="POST" class="settingsForm">
+	    <div class="settingsFormBlock">
 	    	<img class="profileImg" src="  ">
 		  	<input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+		   	
 		   	<label for="input__file" class="input__file_button">
 		    	<span class="input__file_button_text">Выберите файл</span>
 		   	</label>
-		   	<input type="file" name="avatarImage" class="input__file" id="input__file">
+		   	<input type="file" name="bg" class="input__file" id="input__file">
 
 	    </div>
 		<p class="profileTxtLogin"></p>
 		<p class="profileTxtAbout">Тут должно быть инфо о пользователе</p>
 		<textarea class="selfDescription" type="text" name="description" placeholder="Расскажите о себе"></textarea>	
-		<input class="ProfileChangeButton" type="submit" value="Изменить" name="bt">
-	</form>
-	
-
-	<!-- 
-	</form>  -->
-
-<!-- обеспечиваем процесс загрузки -->
-
+		<input type="submit" value="Изменить" name="bt">
+	</form> -->
 
 <?php
 	// куда загрузить
-	$uploaddir = 'img/avatar/';
+	$uploaddir = 'img/bg/';
 	echo '<pre>';
-	if (isset($_POST['description']) && $_POST['description'] != "") {
+	if (isset($_FILES['bg']['type']) && $_FILES['bg']['type']=="image/png"){
 		$login = $_COOKIE["login"];
+		$format="avatar_%d_%s.png";
 		$user_id = -1;
 		$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
 		$result = mysqli_query($link, $sql);
 		while ($row = mysqli_fetch_assoc($result)) {
 				$user_id = $row["id"];
 		}
-		$sql = 'UPDATE `user_info` SET `description`="%s" WHERE user=%d'; 
-		$query=sprintf($sql, $_POST['description'], $user_id);
-		$result = mysqli_query($link, $query);
-	}
-	if (isset($_FILES['avatarImage']['type']) && $_FILES['avatarImage']['type']=="image/png"){
-		$login = $_COOKIE["login"]; 
-		$format="avatar_%d_%s.png"; 
-		$user_id = -1;
-		$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
-		$result = mysqli_query($link, $sql);
-		while ($row = mysqli_fetch_assoc($result)) {
-				$user_id = $row["id"];
-		}
-
+		
 		$uploadfile = $uploaddir . sprintf($format, $user_id, $login);
 
 		// проверка загрузиться ли файл и если так, то он перекидывается в директорию с тем названием, которое вытащила функция  basename
-		echo $_FILES['avatarImage']['tmp_name']=="image.png";
+		echo $_FILES['bg']['tmp_name']=="image.png";
 
-		if (move_uploaded_file($_FILES['avatarImage']['tmp_name'], $uploadfile)) 
+		if (move_uploaded_file($_FILES['bg']['tmp_name'], $uploadfile)) 
 		{
 		    echo "Файл корректен и был успешно загружен.\n";
 		    $sql = 'UPDATE `user_info` SET `url`="%s" WHERE user=%d'; 
-		   $query=sprintf($sql, $uploadfile, $user_id);
+		    $query=sprintf($sql, $uploadfile, $user_id);
 		    echo $query;
 			$result = mysqli_query($link, $query);
 
@@ -103,7 +98,7 @@
 	} 
 	else
 	{
-		echo "Можно загружать изображения только с расширением *.png";
+		echo "Можно загружать изображения только с расширением *.jpg";
 	}
 	print "</pre>";
 	
@@ -120,6 +115,7 @@
 <!-- <script type="text/javascript" src="js/chatUpdate.js"></script> -->
 <!-- <script type="text/javascript" src="js/chat.js"></script> -->
 <script type="text/javascript" src="js/profile.js"></script>
+<script type="text/javascript" src="js/settings.js"></script>
 
 
 

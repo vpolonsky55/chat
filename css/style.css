@@ -1,4 +1,5 @@
 @import "profile/profile.css";
+@import "settings/settings.css";
 body
 {
 	display: flex;
@@ -245,7 +246,7 @@ p{
 	flex-direction: column;
 	align-items: center;
 }
-img{
+.avatarSum img{
 	border: 1px solid red;
 	width: 70px;
 	height: 70px;

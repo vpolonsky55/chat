@@ -11,7 +11,7 @@
 	}
 	else 
 	{
-		if (!empty($_POST['cookie'])) {
+		if ( !empty($_POST['cookie']) && empty($_POST['background']) ) {
 			$sql = 'SELECT COUNT(id) as id FROM `user` WHERE login="'.$_POST['login'].'" and cookie="'.$_POST['cookie'].'"';
 			$result = mysqli_query($link, $sql);
 			while ($row = mysqli_fetch_assoc($result)) {
@@ -25,6 +25,30 @@
 			{
 				echo 0;
 			}
+		}
+		elseif (!empty($_POST['background']) && !empty($_POST['cookie'])) {
+			$sql = 'SELECT id FROM `user` WHERE login="'.$_POST['login'].'" and cookie="'.$_POST['cookie'].'"';
+			$result = mysqli_query($link, $sql);
+			// тут перебираются все поля, которые есть в запросе
+			while ($row = mysqli_fetch_assoc($result)) {
+					$user_id = $row["id"];
+			}
+			echo $user_id;
+		}
+		elseif (!empty($_POST['background']) && !empty($_POST['user_id'])) {
+			$sql = 'SELECT name FROM `backgrounds` WHERE user='.$_POST['user_id'].'';
+			$result = mysqli_query($link, $sql);
+			// этот метод выбирает только одну строку, а нам нужны все строки. То есть сделать ассоциативный массив
+			$backgrounds = array();
+			$i = 0;
+			while ($row = mysqli_fetch_assoc($result))
+			{
+				$backgrounds["name".$i++] = $row["name"];
+
+
+			}
+			echo json_encode($backgrounds);
+			
 		}
 	}
 ?>

@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 $link = mysqli_connect("localhost", "chat", "123", "chat" ); //(сервер, логин, пароль, база)
 
+
 if ($link == false)
 {
     $arr = array('a' => mysqli_connect_error(), 'b' => $_POST['something2'], 'c' => mysqli_connect_error(), 'd' => 4, 'e' => 5);

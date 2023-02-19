@@ -1,23 +1,119 @@
 .profileBody{
-	background: skyblue;
+
+	background: url(../../img/bg/nightCity.png) center/cover no-repeat,
+	#99999999;
+
 }
-.profileImg{
-	width: 500px;
-	height: 500px;
-}
+
 .profileForm{
 	display: flex;
 	flex-direction: column;
 	width: 50%;
+	height: 100vh;
 }
 .profileFormBlock{
 	width: 100%;
+	height: 60%;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	position: relative;
 }
-.profileTxtLogin{
-	text-align: center;
-	font-size: 24px;
+.profileImg{
+	width: 50vh;
+	height: 50vh;
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid red;
+	border-radius: 50%;
+}
+.input__file{
+	opacity: 0;
+  	visibility: hidden;
+}
+.input__file_button
+{
+	position: absolute;
+	right: 0%;
+	color: white;
+	font-weight: 500;
+}
+.input__file_button_text{
+	background: #014554;
+	border: 3px solid white;
+	border-radius: 0 5px; 
+	padding: 5px 14px;
 }
 
+
+.profileTxtLogin{
+	margin: 0 auto;
+	border-radius: 30px;
+	padding: 10px;
+	box-sizing: content-box;
+	width: fit-content;
+	text-align: center;
+	font-size: 24px;
+	color: white;
+	font-weight: 500;
+	background: #0145545e;
+	box-shadow: 0 0 50px #014554;
+	text-shadow: 
+		4px 0 5px  #000, 
+		0 4px 5px  #000, 
+		-4px 0 5px  #000, 
+		0 -4px 5px  #000;
+}
+.profileTxtAbout
+{
+	color: white;
+	font-weight: 500;
+	box-shadow: 0 0 50px #014554;
+	text-shadow: 
+		4px 0 5px  #000, 
+		0 4px 5px  #000, 
+		-4px 0 5px  #000, 
+		0 -4px 5px  #000;
+}
+.selfDescription{
+	background: #014554;
+	border: 3px solid white;
+	border-radius: 0 15px; 
+	padding: 5px 14px;
+	height: 20%;
+	margin-bottom: 15px;
+	resize: none;
+	color: white;
+	outline: none;
+}
+.selfDescription::placeholder{color: white;}
+.selfDescription::-webkit-input-placeholder {color:#fff;}
+.selfDescription::-moz-placeholder{color:#fff;}/* Firefox 19+ */
+.selfDescription:-moz-placeholder           {color:#fff;}/* Firefox 18- */
+.selfDescription:-ms-input-placeholder      {color:#fff;}
+
+.ProfileChangeButton
+{
+	background: #014554;
+	border: 3px solid white;
+	border-radius: 0 5px; 
+	padding: 5px 14px;
+	width: 300px;
+	margin: 0 auto;
+	color: #fff
+}
+.ProfileChangeButton:hover{
+	background: linear-gradient(90deg, blue, #990000, blue);
+	background-size: 300%;
+	animation: button-animation 6s linear 0s infinite;
+}
+@keyframes button-animation{
+ 0%{
+        background-position-x: 0%;
+    }
+    100%{
+        background-position-x: 300%;
+    }
+}

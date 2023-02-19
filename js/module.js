@@ -238,6 +238,7 @@ class Modal
 	}
 
 }
+// класс для меню с аватаркой справа вверху
 class Avatar
 {
 	constructor(parent, selectorAv, selectorDet, selectorSum, selectorImg, selectorLink, login)
@@ -252,7 +253,7 @@ class Avatar
 		this.img = new Img(this.summary.obj, selectorImg, this.url);
 		this.profile = new Link(this.details.obj, selectorLink, "http://localhost/chat/profile.php");
 		this.profile.insertText("Профиль");
-		this.setings = new Link(this.details.obj, selectorLink, "");
+		this.setings = new Link(this.details.obj, selectorLink, "http://localhost/chat/settings.php");
 		this.setings.insertText("Настройки");
 		this.exit = new Link(this.details.obj, selectorLink, "");
 		this.exit.obj.addEventListener("click", function(event)
@@ -298,4 +299,13 @@ class Avatar
 		this.img.setUrl(url);
 	}
 	
+}
+class ProfileAvatar extends Avatar
+{
+	constructor(...args)
+    {
+        super(...args);
+        this.profile.obj.href="http://localhost/chat/index.php"
+		this.profile.insertText("Чат");
+    }
 }
