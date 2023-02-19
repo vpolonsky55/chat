@@ -137,42 +137,6 @@
 
 
 
-<script type="text/javascript">
-	let logName = document.cookie.split("=")[0]
-	data = 'login='+logName+'&getUserId=1 ', 
-	sendMessage = send('POST', 'http://localhost/chat/responsejs.php', data);
-	sendMessage.then(function(id)
-		{
-			let post = 'login='+logName+'&getUserUrl='+id+'', 
-			getMessage = send('POST', 'http://localhost/chat/responsejs.php', post, "html");
 
-			getMessage.then(function(url)
-				{
-					// console.log(url)
-					document.querySelector(".profileImg").src=url
-					// console.log(document.querySelector(".profileImg").src)
-				}
-			)
-		}
-	)
-
-	sendMessage.then(function(id)
-		{
-			let post = 'login='+logName+'&getUserDescription='+id+'', 
-			getMessage = send('POST', 'http://localhost/chat/responsejs.php', post, "html");
-
-			getMessage.then(function(description)
-				{
-					console.log(description)
-					document.querySelector(".profileTxtAbout").innerText=description
-					console.log(document.querySelector(".profileTxtAbout").innerText)
-				}
-			)
-		}
-	)
-
-
-
-</script>
 </body>
 </html>

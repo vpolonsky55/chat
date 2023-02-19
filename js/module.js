@@ -46,11 +46,12 @@ class Div
 }
 class Img
 {
-	constructor(parent, selector, url)
+	constructor(parent, selector, url, id = null)
 	{
 		this.parent = parent;
 		this.selector = selector;
 		this.obj = document.createElement("img");
+		this.id = id;
 		if (selector[0] == ".")
 		{
 			this.obj.className = selector.slice(1);
@@ -62,15 +63,21 @@ class Img
 		this.obj.src = url;
 		parent.appendChild(this.obj);
 	}
+	
 	getMe()
 	{
 		return this.obj
 	}
+	
 	setUrl(url)
 	{
 		this.obj.src = url;
 	}
 
+	getId()
+	{
+		return this.id;
+	}
 }
 class P
 {
