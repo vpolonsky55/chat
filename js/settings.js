@@ -16,7 +16,7 @@ function getBackgrounds()
 					console.log(typeof Object.values(message))
 					for (imgName in message)
 					{
-						// console.log(`bg/${message[imgName]}`)
+						console.log(`bg/${message[imgName]}`)
 						let imgParent = document.querySelector(".modal__bg"),
 						wrapper = new Element(imgParent, "div", ".modal__wrapper"),
 						bgImg= new Img(wrapper.obj, ".modal__img", `img/bg/${message[imgName]}`),
@@ -31,19 +31,10 @@ function getBackgrounds()
 	
 }
 
-function deleteBgImage()
-{
-	let remImg = document.querySelectorAll(".modal__img")
-	console.log(remImg)
-}
-
-document.addEventListener('click', function(e) {
-    console.log(e.target);
-});
-
 // document.body.onload = getBackgrounds()
 window.onload=function()
 {
 	getBackgrounds()
+	console.log("pagedownload")
 	
 }
