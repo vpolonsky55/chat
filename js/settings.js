@@ -16,7 +16,6 @@ function getBackgrounds()
 					console.log(typeof Object.values(message))
 					for (imgName in message)
 					{
-						console.log(`bg/${message[imgName]["name"]}`)
 						let imgParent = document.querySelector(".modal__bg"),
 						wrapper = new Element(imgParent, "div", ".modal__wrapper"),
 						bgImg= new Img(wrapper.obj, ".modal__img", `img/bg/${message[imgName]["name"]}`),
@@ -24,10 +23,11 @@ function getBackgrounds()
 							remImg.getMe().addEventListener( 'click', function(event)
 							{
 								let sendData =  'idImgForDelete='+remImg.getId()+'&deleteImgFromBG=1'+'&filePath='+`img/bg/${message[imgName]["name"]}`,
-								sendMessage = send('POST', 'http://localhost/chat/handler.php', sendData);
+								sendMessage = send('POST', 'http://localhost/chat/handler.php', sendData, type="text");
 								sendMessage.then(function(message)
 									{
-										console.log("Картинка удалена", remImg.getId())
+										console.log("Картинка удалена", remImg.getId(), message)
+										document.querySelector(".modal__bg").removeChild(remImg.getMe().parentNode)
 									}
 								)
 							}
