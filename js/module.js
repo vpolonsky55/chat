@@ -46,12 +46,13 @@ class Div
 }
 class Img
 {
-	constructor(parent, selector, url, id = null)
+	constructor(parent, selector, url, id = null, chek = 0)
 	{
 		this.parent = parent;
 		this.selector = selector;
 		this.obj = document.createElement("img");
 		this.id = id;
+		this.chek = chek
 		if (selector[0] == ".")
 		{
 			this.obj.className = selector.slice(1);
@@ -77,6 +78,10 @@ class Img
 	getId()
 	{
 		return this.id;
+	}
+	getCheck()
+	{
+		return this.chek
 	}
 }
 class P

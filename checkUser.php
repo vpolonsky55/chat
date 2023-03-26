@@ -36,14 +36,14 @@
 			echo $user_id;
 		}
 		elseif (!empty($_POST['background']) && !empty($_POST['user_id'])) {
-			$sql = 'SELECT name, id FROM `backgrounds` WHERE user='.$_POST['user_id'].'';
+			$sql = 'SELECT name, id, checked FROM `backgrounds` WHERE user='.$_POST['user_id'].'';
 			$result = mysqli_query($link, $sql);
 			// этот метод выбирает только одну строку, а нам нужны все строки. То есть сделать ассоциативный массив
 			$backgrounds = array();
 			$i = 0;
 			while ($row = mysqli_fetch_assoc($result))
 			{
-				$backgrounds["name".$i++] =  array('name' => $row["name"], 'id' => $row['id']);
+				$backgrounds["name".$i++] =  array('name' => $row["name"], 'id' => $row['id'], 'checked' => $row['checked']);
 
 
 			}

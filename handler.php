@@ -23,8 +23,30 @@
 			}
 			else
 			{
-				echo "file is not deleted from DB";
+				echo "file not deleted from DB";
 			}
 		}
+		if (isset($_POST['selectImgFromBG']) && isset($_POST['idImgForSetBackground']) && isset($_POST['user_id'])) {
+			$sql = 'UPDATE `backgrounds` SET `checked`=0 WHERE user = %d';
+			$query=sprintf($sql, $_POST['user_id']);
+			$result = mysqli_query($link, $query);
+
+			$sql = 'UPDATE `backgrounds` SET `checked`="1" WHERE id=%d';
+
+			// объединение специфиакторов в sql
+			$query=sprintf($sql,$_POST['idImgForSetBackground']);
+			$result = mysqli_query($link, $query);
+
+			if ($result == true)
+			{
+				echo "selected";
+			}
+			else
+			{
+				echo "file not selected in DB";
+			}
+		}
+		
+	
 	}
 ?>
