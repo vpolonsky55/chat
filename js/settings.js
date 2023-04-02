@@ -18,7 +18,7 @@ function getBackgrounds()
 					{
 						let imgParent = document.querySelector(".modal__bg"),
 						wrapper = new Element(imgParent, "div", ".modal__wrapper"),
-						bgImg= new Img(wrapper.obj, ".modal__img", `img/bg/${message[imgName]["name"]}`, message[imgName]['id'], message[imgName]['checked']),
+						bgImg= new Img(wrapper.obj, ".modal__img", `img/bg/${userId}/${message[imgName]["name"]}`, message[imgName]['id'], message[imgName]['checked']),
 
 						chckImg= new Img(wrapper.obj, ".modal__checked", `img/icons/checkedSmb.png`), // добавляем галочку на картинку (opacity: 0)
 
@@ -26,18 +26,18 @@ function getBackgrounds()
 						if (bgImg.getCheck() == "1")
 						{
 							bgImg.obj.style.opacity = 0.5;
-							// bgImg.querySelector(".modal__checked").style.opacity = 1;
+							bgImg.parentNode.querySelector(".modal__checked").style.opacity = 1;
 						}
 						else
 						{
 							bgImg.obj.style.opacity = 1;
-							// bgImg.querySelector(".modal__checked").style.opacity = 1;
+							bgImg.parentNode.querySelector(".modal__checked").style.opacity = 0;
 
 						}
 
 						remImg.getMe().addEventListener( 'click', function(event)
 							{
-								let sendData =  'idImgForDelete='+remImg.getId()+'&deleteImgFromBG=1'+'&filePath='+`img/bg/${message[imgName]["name"]}`,
+								let sendData =  'idImgForDelete='+remImg.getId()+'&deleteImgFromBG=1'+'&filePath='+`img/bg/${userId}/${message[imgName]["name"]}`,
 								sendMessage = send('POST', 'http://localhost/chat/handler.php', sendData, type="text");
 								sendMessage.then(function(message)
 									{

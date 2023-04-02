@@ -1,6 +1,15 @@
+.settingsBody{
+}
 .settings{
-	/*height: 100vh;*/
+	height: 100vh;
 	width: 100%;
+}
+.settings__title
+{
+  font-family: "Arial";
+  font-size: 35px;
+  text-shadow: 0px 0px 10px #2707a7;
+  color: #fff;
 }
 .settings__wraper{
 	height: 100px;
@@ -9,27 +18,46 @@
 	flex-direction: column;
 	align-items: center;
 }
+
+
 .property{
 	display: flex;
-	width: 40%;
+	width: 50%;
+	min-height: 170px;
 	justify-content: space-around;
+	flex-direction: column;
+	align-items: center;
+	background-image: linear-gradient(-135deg, #2b35d182, #2dc7aa85);
+	border-radius: 15px;
 }
+.property__text
+{
+	color: white;
+}
+input[type=file]{
+  color: white;
+  width: 170px;
+  padding-left: 0px;
+}
+
 .modal__bg
 {
 	width: 50%;
-	height:50vh;
+	height: 300px;
 	position: absolute;
-	bottom: 0%;
+	top: 500px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border: 1px solid black;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: flex-start;
-	flex-wrap: wrap;	
+	flex-wrap: wrap;
 	background: #ffffff99;
-	overflow-y: scroll; /* прокрутка по вертикали */
+	overflow-y: scroll;
 
+	padding: 30px;
+	box-sizing: border-box;
 }
 
 .modal__wrapper{

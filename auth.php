@@ -76,7 +76,10 @@
 
 				$sql =  'INSERT INTO `user_info`(`user`, `url`, `description`, `name`, `family_name`, `email`) VALUES ('.$id.', "'.$info["picture"].'", "напишите информацию о себе", "'.$info["name"].'", "'.$info["family_name"].'", "'.$info["email"].'")';
 				$result = mysqli_query($link, $sql);
-
+				if (!is_dir("img/bg/".$id))
+				{		
+					mkdir("img/bg/".$id);
+				}
 				// echo $sql;
 				header("Location: http://localhost/chat/index.php"); 
 				exit();

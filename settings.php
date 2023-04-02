@@ -81,7 +81,7 @@
 		while ($row = mysqli_fetch_assoc($result)) {
 				$user_id = $row["id"];
 		}
-
+		$uploaddir.=$user_id."/";
 		$number_img = -1;
 		$sql = 'SELECT count(id) as id FROM `backgrounds` WHERE user= "'.$user_id.'"';
 		$result = mysqli_query($link, $sql);
