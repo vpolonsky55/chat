@@ -24,7 +24,59 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>  
-<body class="settingsBody">
+<?
+	/*
+		Получаем адрес к папке пользователя с фоновыми изображениями
+	*/
+	$uploaddir = 'img/bg/';
+	if(!isset($_COOKIE["login"]))
+	{
+		header("Location: http://localhost/chat/auth.php"); 
+		exit();
+	}
+	$login = $_COOKIE["login"];
+	$format="%d_bg_%d.png"; //На будущее необх. расш. кол-во расшиирений
+	$user_id = -1;
+	$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
+	$result = mysqli_query($link, $sql);
+	while ($row = mysqli_fetch_assoc($result)) {
+			$user_id = $row["id"];
+	}
+	$uploaddir.=$user_id."/";
+
+	/*
+		Получаем информацию о наличии выбранного фонового изображения и устанавливаем его.
+	*/
+
+
+	$formatSql = 'SELECT COUNT(id) as id FROM `backgrounds` WHERE user=%d AND checked=1';
+	$sql = sprintf($formatSql, $user_id);
+	$result = mysqli_query($link, $sql);
+	while ($row = mysqli_fetch_assoc($result)) {
+		if ($row["id"] == 1)
+		{
+			$formatSql = 'SELECT name FROM `backgrounds` WHERE user=%d AND checked=1';
+			$sql = sprintf($formatSql, $user_id);
+			$result = mysqli_query($link, $sql);
+			while ($row = mysqli_fetch_assoc($result)) {
+				if ($row["name"])
+				{
+					?>
+						<body class="settingsBody" style="background-image: url(<? echo  $uploaddir.$row["name"]; ?>);">
+						<!-- <body class="settingsBody" style="background: url(img/img/bg/760/760_bg_1.png);"> -->
+
+					<?
+				}
+			}
+		}
+		else
+		{
+			?>
+				<body class="settingsBody">
+			<?
+		}
+	}
+?>
 
 	<div class="settings">
 		<div class="settings__wraper">
@@ -45,43 +97,18 @@
 		<div class="settings_wraper"></div>
 	</div>
 
-	<!-- <form enctype="multipart/form-data" action="" method="POST" class="settingsForm">
-	    <div class="settingsFormBlock">
-	    	<img class="profileImg" src="  ">
-		  	<input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-		   	
-		   	<label for="input__file" class="input__file_button">
-		    	<span class="input__file_button_text">Выберите файл</span>
-		   	</label>
-		   	<input type="file" name="bg" class="input__file" id="input__file">
-
-	    </div>
-		<p class="profileTxtLogin"></p>
-		<p class="profileTxtAbout">Тут должно быть инфо о пользователе</p>
-		<textarea class="selfDescription" type="text" name="description" placeholder="Расскажите о себе"></textarea>	
-		<input type="submit" value="Изменить" name="bt">
-	</form> -->
-
-
-
-
-
+	
 
 <?php
 	// куда загрузить
-	$uploaddir = 'img/bg/';
-	echo '<pre>';
+
+	
+
+	/*
+		Загружаем новое изображение.
+	*/
 	if (isset($_FILES['bg']['type']) && $_FILES['bg']['type']=="image/png"){
 
-		$login = $_COOKIE["login"];
-		$format="%d_bg_%d.png"; //На будущее необх. расш. кол-во расшиирений
-		$user_id = -1;
-		$sql = 'SELECT id FROM `user` WHERE login="'.$login.'"';
-		$result = mysqli_query($link, $sql);
-		while ($row = mysqli_fetch_assoc($result)) {
-				$user_id = $row["id"];
-		}
-		$uploaddir.=$user_id."/";
 		$number_img = -1;
 		$sql = 'SELECT count(id) as id FROM `backgrounds` WHERE user= "'.$user_id.'"';
 		$result = mysqli_query($link, $sql);

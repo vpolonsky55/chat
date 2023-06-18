@@ -26,12 +26,12 @@ function getBackgrounds()
 						if (bgImg.getCheck() == "1")
 						{
 							bgImg.obj.style.opacity = 0.5;
-							bgImg.parentNode.querySelector(".modal__checked").style.opacity = 1;
+							// bgImg.parentNode.querySelector(".modal__checked").style.opacity = 1;
 						}
 						else
 						{
 							bgImg.obj.style.opacity = 1;
-							bgImg.parentNode.querySelector(".modal__checked").style.opacity = 0;
+							// bgImg.parentNode.querySelector(".modal__checked").style.opacity = 0;
 
 						}
 
@@ -61,6 +61,7 @@ function getBackgrounds()
 										backgrounds.forEach((image, index) => {image.style.opacity = 1});
 
 										bgImg.obj.style.opacity = 0.5;
+										location.reload()
 
 									}
 								)

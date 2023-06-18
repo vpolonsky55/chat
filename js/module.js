@@ -44,6 +44,54 @@ class Div
 	}
 
 }
+class Form
+{
+	constructor(parent, selector, id=0, value="None", action)
+	{
+		//console.log(value)
+		this.parent = parent;
+		this.selector = selector;
+		this.obj = document.createElement("form");
+		this.id = id;
+		this.value=value;
+		this.obj.value=this.value;
+		this.classes = [];
+		this.idName = "";
+		this.parseString();
+		parent.appendChild(this.obj);
+	}
+	getMe()
+	{
+		return this.obj
+	}
+	setListener(behavior)
+	{
+		this.obj.addEventListener("click", function(event)
+			{ 
+				behavior(this.id, this);	
+			}
+		)
+	}
+	parseString()
+	{
+		let parse = this.selector.split(" ");
+		this.classes = parse.filter((value)=> value.includes("."));
+		this.classes = this.classes.map(value => value.slice(1)).join(" ");
+		this.obj.className = this.classes;
+		this.idName = parse.filter((value)=> value.includes("#"))[0];
+		if (this.idName){
+			this.obj.id = this.idName.slice(1);
+		}
+
+	}
+	getValue()
+	{
+		return this.value;
+	}
+
+}
+
+
 class Img
 {
 	constructor(parent, selector, url, id = null, chek = 0)
@@ -126,6 +174,44 @@ class Textarea
 		this.obj = document.createElement("textarea");
 		this.text = "";
 		// this.familly = "Sidorov";
+		if (selector[0] == ".")
+		{
+			this.obj.className = selector.slice(1);
+		}
+		else if (selector[0] == "#")
+		{
+			this.obj.id = selector.slice(1);
+		}
+		parent.appendChild(this.obj);
+	}
+	insertText(text)
+	{
+		this.obj.innerText = text;
+		this.text = text;
+	}
+	getText()
+	{
+		return this.obj.value
+	}
+	getMe()
+	{
+		return this.obj
+	}
+	addEvent(event, behavior)
+	{
+		this.obj.addEventListener(event, behavior)
+	}
+	
+}
+class Input
+{
+	constructor(parent, selector, type)
+	{
+		this.parent = parent;
+		this.selector = selector;
+		this.obj = document.createElement("input");
+		this.obj.setAttribute('type', type)
+		this.text = "";
 		if (selector[0] == ".")
 		{
 			this.obj.className = selector.slice(1);
@@ -250,6 +336,8 @@ class Modal
 	}
 
 }
+
+
 // класс для меню с аватаркой справа вверху
 class Avatar
 {
@@ -276,7 +364,7 @@ class Avatar
 		    	document.cookie = cookie+ "; max-age=-1";
 			}
 			console.log("coockie=", document.cookie)
-			location.reload()
+			location.href = "auth.php"
 		})
 		this.exit.insertText("Выход");
 		// SELECT id FROM `user` WHERE login = "log" 
@@ -320,4 +408,106 @@ class ProfileAvatar extends Avatar
         this.profile.obj.href="http://localhost/chat/index.php"
 		this.profile.insertText("Чат");
     }
+
+}
+
+
+
+
+class SideBar
+{
+	constructor(parent, selectorBg, selCollBtn, selWrapHelp, selWrap)
+	{
+		this.block = new Div(parent, selectorBg);
+		this.state = true
+
+		this.collaps = new Img(document.querySelector("body"), ".side-bar__collapsebtn", "img/icons/side-bar__collapsebtn.png")
+		this.collaps.obj.addEventListener("click", () => {this.clotting()})
+		
+		this.titleBlock = new Div(this.block.obj, ".side-bar__title-block")
+		this.logo = new Img(this.titleBlock.obj, ".side-bar__logo", "img/icons/side-bar__logo.png") // необходимо дописать url
+		this.titleText = new P(this.titleBlock.obj, ".side-bar__title")
+		this.titleText.insertText("Kомпания")
+
+
+		this.wrapMainMenu = new Div(this.block.obj, ".side-bar__wrap");
+		this.mainMenuTitle = new P(this.wrapMainMenu.obj, ".side-bar__menutitle")
+		this.mainMenuTitle.insertText("ГЛАВНОЕ МЕНЮ")
+		this.sideBarItemPanel = new Div(this.wrapMainMenu.obj, ".side-bar__item")
+		// добвить картинку
+		this.departmentsText = new P(this.sideBarItemPanel.obj, "side-bar__text")
+		this.departmentsText.insertText("Панель администратора")
+
+
+		this.wrapWorkspace = new Div(this.block.obj, ".side-bar__wrap");
+		this.mainMenuTitle = new P(this.wrapWorkspace.obj, ".side-bar__menutitle")
+		this.mainMenuTitle.insertText("Рабочее пространство")
+
+		this.sideBarItemEmployees = new Div(this.wrapWorkspace.obj, ".side-bar__item")
+		this.employeesText = new P(this.sideBarItemEmployees.obj, "side-bar__text")
+		this.employeesText.insertText("Cотрудники")
+
+		this.sideBarItemDepartments = new Div(this.wrapWorkspace.obj, ".side-bar__item")
+		// добвить картинку
+		this.departmentsText = new P(this.sideBarItemDepartments.obj, "side-bar__text")
+		this.departmentsText.insertText("Отделы")
+
+
+
+		this.wrapCommon = new Div(this.block.obj, ".side-bar__wrap");
+		this.wrapHelp = new Div(this.block.obj, ".side-bar__wrap-help");
+		
+	}
+	clotting()
+		{
+			let body = document.querySelector("body");
+			body.classList.toggle("body_hidden")
+			if (this.state == true)
+			{
+				this.state = false;
+				this.collaps.obj.style ="left: -20px; transform: rotate(-180deg)";
+			}
+			else
+			{
+				this.state = true;
+				this.collaps.obj.style ="transform: rotate(0deg)";
+			}
+		}
+}
+
+class TopBar extends Div
+{
+	constructor(...args)
+	{
+		super(...args);
+		this.title = new P(this.obj, ".top-bar__title");
+		this.insertText("Сотрудники")
+	}
+	insertText(text)
+	{
+		this.title.insertText(text)
+	}
+}
+
+class Button extends Input
+{
+	constructor(...args)
+	{
+		super(...args)
+
+	}
+	setValue(value)
+	{
+		this.obj.value = value;
+	}
+}
+class MainContent extends Div
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.btnAdd = new Button(this.obj, ".main-content__btn_add", "button")
+		this.btnAdd.setValue("Добавить")
+
+	}
 }
