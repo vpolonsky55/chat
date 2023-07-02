@@ -1,3 +1,35 @@
+class Element
+{
+  constructor(parent, elementType, selector, id=0)
+  {
+    this.parent = parent;
+    this.selector = selector;
+    this.obj = document.createElement(elementType);
+    this.id = id;
+    this.classes = [];
+    this.idName = "";
+    this.parseString();
+    parent.appendChild(this.obj);
+  }
+  parseString()
+  {
+    let parse = this.selector.split(" ");
+    this.classes = parse.filter((value)=> value.includes("."));
+    this.classes = this.classes.map(value => value.slice(1)).join(" ");
+    this.obj.className = this.classes;
+    this.idName = parse.filter((value)=> value.includes("#"))[0];
+    if (this.idName)
+    {
+      this.obj.id = this.idName.slice(1);
+    }
+    //console.log(this.obj.className, this.selector)
+  }
+  getMe()
+  {
+    return this.obj
+  }
+}
+
 class Div
 {
 	constructor(parent, selector, id=0, value="None")
@@ -44,9 +76,10 @@ class Div
 	}
 
 }
+
 class Form
 {
-	constructor(parent, selector, id=0, value="None", action)
+	constructor(parent, selector, id=0, value="None", action = "None")
 	{
 		//console.log(value)
 		this.parent = parent;
@@ -55,6 +88,7 @@ class Form
 		this.id = id;
 		this.value=value;
 		this.obj.value=this.value;
+		this.action = action
 		this.classes = [];
 		this.idName = "";
 		this.parseString();
@@ -90,7 +124,6 @@ class Form
 	}
 
 }
-
 
 class Img
 {
@@ -132,6 +165,7 @@ class Img
 		return this.chek
 	}
 }
+
 class P
 {
 	constructor(parent, selector)
@@ -165,6 +199,7 @@ class P
 		return this.obj
 	}
 }
+
 class Textarea
 {
 	constructor(parent, selector)
@@ -203,6 +238,7 @@ class Textarea
 	}
 	
 }
+
 class Input
 {
 	constructor(parent, selector, type)
@@ -221,6 +257,11 @@ class Input
 			this.obj.id = selector.slice(1);
 		}
 		parent.appendChild(this.obj);
+	}
+	insertPlaceholder(text)
+	{
+		this.obj.setAttribute('placeholder', text)
+		this.text = text
 	}
 	insertText(text)
 	{
@@ -241,37 +282,22 @@ class Input
 	}
 	
 }
-class Element
+
+class Button extends Input
 {
-  constructor(parent, elementType, selector, id=0)
-  {
-    this.parent = parent;
-    this.selector = selector;
-    this.obj = document.createElement(elementType);
-    this.id = id;
-    this.classes = [];
-    this.idName = "";
-    this.parseString();
-    parent.appendChild(this.obj);
-  }
-  parseString()
-  {
-    let parse = this.selector.split(" ");
-    this.classes = parse.filter((value)=> value.includes("."));
-    this.classes = this.classes.map(value => value.slice(1)).join(" ");
-    this.obj.className = this.classes;
-    this.idName = parse.filter((value)=> value.includes("#"))[0];
-    if (this.idName)
-    {
-      this.obj.id = this.idName.slice(1);
-    }
-    //console.log(this.obj.className, this.selector)
-  }
-  getMe()
-  {
-    return this.obj
-  }
+	constructor(...args)
+	{
+		super(...args)
+
+	}
+	setValue(value)
+	{
+		this.obj.value = value;
+	}
 }
+
+
+
 class Link
 {
   constructor(parent, selector, href, id=0)
@@ -312,6 +338,8 @@ class Link
     return this.obj
   }
 }
+
+
 class Modal
 {
 	constructor(parent, selectorBg, selectorWin, selectorP, selectorBtn, selectorTa)
@@ -411,7 +439,27 @@ class ProfileAvatar extends Avatar
 
 }
 
+class ButtonAddNewUser extends Button
+{
+	constructor(...args)
+	{
+		super(...args)
 
+
+	}
+
+	addUser(name, email, department)
+	{
+		console.log(true)
+		let data = 'name='+name+'&email='+ email+'&department='+ department,
+		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data)
+		sendUserData.then(function(massage)
+			{
+				console.log("hi")
+			}
+		)
+	}
+}
 
 
 class SideBar
@@ -434,9 +482,11 @@ class SideBar
 		this.mainMenuTitle = new P(this.wrapMainMenu.obj, ".side-bar__menutitle")
 		this.mainMenuTitle.insertText("ГЛАВНОЕ МЕНЮ")
 		this.sideBarItemPanel = new Div(this.wrapMainMenu.obj, ".side-bar__item")
-		// добвить картинку
+		this.adminIcon = new Img(this.sideBarItemPanel.obj, ".side-bar__icon", "img/icons/subtract.png")
 		this.departmentsText = new P(this.sideBarItemPanel.obj, "side-bar__text")
 		this.departmentsText.insertText("Панель администратора")
+
+
 
 
 		this.wrapWorkspace = new Div(this.block.obj, ".side-bar__wrap");
@@ -444,17 +494,32 @@ class SideBar
 		this.mainMenuTitle.insertText("Рабочее пространство")
 
 		this.sideBarItemEmployees = new Div(this.wrapWorkspace.obj, ".side-bar__item")
+		this.employessIcon = new Img(this.sideBarItemEmployees.obj, ".side-bar__icon", "img/icons/empl_icon.png")
 		this.employeesText = new P(this.sideBarItemEmployees.obj, "side-bar__text")
 		this.employeesText.insertText("Cотрудники")
 
 		this.sideBarItemDepartments = new Div(this.wrapWorkspace.obj, ".side-bar__item")
-		// добвить картинку
+		this.employessIcon = new Img(this.sideBarItemDepartments.obj, ".side-bar__icon", "img/icons/department__icon.png")
 		this.departmentsText = new P(this.sideBarItemDepartments.obj, "side-bar__text")
 		this.departmentsText.insertText("Отделы")
 
 
 
 		this.wrapCommon = new Div(this.block.obj, ".side-bar__wrap");
+		this.wrapCommonTitle = new P(this.wrapCommon.obj, ".side-bar__menutitle")
+		this.wrapCommonTitle.insertText("Общее")
+
+		this.sideBarItemCommon = new Div(this.wrapCommon.obj, ".side-bar__item")
+		this.employessIcon = new Img(this.sideBarItemCommon.obj, ".side-bar__icon", "img/icons/folderFiles__icon.png")	
+		this.fileFolderText = new P(this.sideBarItemCommon.obj, "side-bar__text")
+		this.fileFolderText.insertText("Файлы и папки")
+
+		this.sideBarItemSettings = new Div(this.wrapCommon.obj, ".side-bar__item")
+		this.employessIcon = new Img(this.sideBarItemSettings.obj, ".side-bar__icon", "img/icons/settings__icon.png")	
+		this.settingsText = new P(this.sideBarItemSettings.obj, "side-bar__text")
+		this.settingsText.insertText("Настройки")
+
+
 		this.wrapHelp = new Div(this.block.obj, ".side-bar__wrap-help");
 		
 	}
@@ -482,6 +547,17 @@ class TopBar extends Div
 		super(...args);
 		this.title = new P(this.obj, ".top-bar__title");
 		this.insertText("Сотрудники")
+		this.wrapper = new Div(this.obj, ".top-bar__wrapper")
+		this.search = new Img(this.wrapper.obj, ".top-bar__icon_search", "img/icons/search_icon.png")
+		this.ring = new Img(this.wrapper.obj, ".top-bar__icon_ring", "img/icons/ring_icon.png")
+		this.avatar = new Img(this.wrapper.obj, ".top-bar__avatar", "img/admin_face/top-bar__avatar.png")
+		this.topBarText = new P(this.wrapper.obj, ".top-bar__text")
+		this.topBarText.insertText("Имя Админа")
+		this.topBarDetails = new Element(this.wrapper.obj, "details", ".top-bar__select");
+		this.topBarSummary = new Element(this.topBarDetails.obj, "summary", ".top-bar__summary");
+
+
+
 	}
 	insertText(text)
 	{
@@ -489,25 +565,60 @@ class TopBar extends Div
 	}
 }
 
-class Button extends Input
-{
-	constructor(...args)
-	{
-		super(...args)
-
-	}
-	setValue(value)
-	{
-		this.obj.value = value;
-	}
-}
-class MainContent extends Div
+class MainContent extends Form
 {
 	constructor(...args)
 	{
 		super(...args)
 		this.btnAdd = new Button(this.obj, ".main-content__btn_add", "button")
 		this.btnAdd.setValue("Добавить")
+		this.btnAdd.obj.addEventListener("click", function(event)
+			{
+				this.emplModal = new ModalAddEmpl(document.body, ".modal-admin")
 
+			}
+		)
+		this.employees = new Div(this.obj, ".main-content__employees")
+		this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
+	}
+}
+
+class EmployeesRow extends Div
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.name = new Input(this.obj, ".main-content__input_name", "text")
+		this.name.insertPlaceholder("Имя")
+		this.email = new Input(this.obj, ".main-content__input_email", "email")
+		this.email.insertPlaceholder("email")
+		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
+		this.btnChange.setValue("Изменить")
+		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
+		this.btnDell.setValue("Удалить")
+
+	}
+}
+
+class ModalAddEmpl extends Form
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.name = new Input(this.obj, ".admin-modal__name", "text")
+		this.email = new Input(this.obj, ".admin-modal__email", "text")
+		this.department = new Input(this.obj, ".admin-modal__department", "text")
+		this.btnAdd = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
+		this.btnAdd.setValue("Добавить")
+		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
+		this.btnCancel.setValue("Отменить")
+		this.btnAdd.obj.addEventListener("click", (event) =>
+			{
+				let name = this.name.getText(),
+				email = this.email.getText(),
+				department = this.department.getText();
+				this.btnAdd.addUser(name, email, department)
+			}
+		)
 	}
 }

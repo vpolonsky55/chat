@@ -16,6 +16,8 @@ body{
 .body_hidden{
 	grid-template-columns: 0px 1fr;
 }
+
+
 .side__bar{
 	background: #373A44;
 	height: 100vh;
@@ -24,6 +26,7 @@ body{
 	overflow:hidden;
 	grid-area: sb;
 }
+
 .side-bar__collapsebtn{
 	position: absolute;
 	width: 40px;
@@ -32,6 +35,7 @@ body{
 	top: 25px;
 	transition: 1s;
 }
+
 .side-bar__title-block{
 	width: 284px;
 	display: flex;
@@ -49,14 +53,34 @@ body{
 .side-bar__title{
 
 }
+
+
 .side-bar__wrap{
-	background: blue; /*временно*/
 	display: flex;
 	flex-direction: column;
 	width: 284px;
 	margin-bottom: 80px;
 
+}
+.side-bar__menutitle{
+	margin-bottom: 10px;
+	color: #51CBFF;
+	margin-left: 30px;
+}
+.side-bar__item{
+	background: #292A2F;
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	color: white;
+	font-weight: 400;
 
+}
+.side-bar__icon
+{
+	margin-right: 8px;
+	height: 30px;
+	width: 30px;
 }
 .side-bar__text{
 
@@ -65,20 +89,41 @@ body{
 
 .top__bar{
 	grid-area: tb;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 50px;
 }
 
+.top-bar__title{
+	font-weight: 600;
+	font-size: 32px;
+}
+.top-bar__wrapper{
+	width: 309px;
+	height: 40px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
 .main-content{
 	grid-area: mc;
-	overflow-y: scroll;
 	background: #C4C4C4;
+	padding: 50px;
+	box-sizing: border-box;
 }
-.main-content__btn_add
+.main-content__employees
+{
+	overflow-y: scroll;
+	height: 60vh;
+}
+.main-content__btn_add,
+.main-content__btn_change,
+.main-content__btn_del
 {
 	width: 200px;
 	height: 50px;
-	margin-left: 60px;
-	margin-top: 50px;
 	background: #017EFA;
 	border-radius: 6px;
 	font-family: 'Roboto';
@@ -86,4 +131,57 @@ body{
 	font-size: 20px;
 	color: #FFFFFF;
 	border: none;
+	transition: 0.5s;
+}
+.main-content__btn_add:hover,
+.main-content__btn_change:hover,
+.main-content__btn_del:hover{
+	background: darkblue;
+}
+.main-content__btn_add:active,
+.main-content__btn_change:active,
+.main-content__btn_del:active{
+	background: white;
+	color: black;
+	transition: 0s;
+}
+.main-content__employees{
+	background: #B0AEAE;
+	width: 90%;
+	margin: 60px auto 0 auto;
+	min-height: 100px /*временно*/
+}
+.main-content__employees-row{
+	width: 90%;
+	margin:auto;
+	padding: 50px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.main-content__input_name,
+.main-content__input_email{
+	width: 25%;
+	height: 54px;
+	background: #D9D9D9;
+	border-radius: 6px;
+	text-align: center;
+	font-size: 20px;
+	border: none;
+	outline: none;
+}
+
+.modal-admin{
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	height: 50vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	background: #7B83A1;
+
 }
