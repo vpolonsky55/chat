@@ -7,6 +7,7 @@ screen = {
 	":D":":D",
 },
 retEm={};
+
 function createReplace(){
 	let keys = Object.keys(smiles),
 	values = Object.values(smiles);
@@ -16,6 +17,7 @@ function createReplace(){
 	}
 }
 createReplace();
+
 function replaceSmile(mess, arg){
 	 if (arg) 
 	 {
@@ -34,6 +36,7 @@ function replaceSmile(mess, arg){
 	}
 	 return mess
 }
+
 function send(method, url, data, type="json")
 {
 	return new Promise((resolve, reject) => 
@@ -60,6 +63,8 @@ function send(method, url, data, type="json")
 		}
 	)
 }
+
+
 function addClass(p, i, listMessages, login, selector)
 {
 	selector = selector.slice(1);
@@ -70,6 +75,7 @@ function addClass(p, i, listMessages, login, selector)
 		// console.log('меняем цвет')
 	}
 }
+
 function checkWriting()
 {
 	data = 'login='+login+'&writing=1 ', 

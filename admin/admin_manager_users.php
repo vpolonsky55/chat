@@ -15,23 +15,23 @@
 		{
 
 			// создание нового пользователя в таблице user (выполняется 1 раз)
-			$sql = 'insert into admin_manager_users (name, email, status) values("'.$_POST['name'].'", "'.$_POST['email'].'", "'.$_POST['department'].'")'; 
+			$sql = 'insert into admin_manager_users (name, email, department) values("'.$_POST['name'].'", "'.$_POST['email'].'", "'.$_POST['department'].'")'; 
 			$result = mysqli_query($link, $sql);
+			
+			$sql = 'SELECT COUNT(id) AS result FROM `admin_manager_users` WHERE name="'.$_POST['name'].'" AND email="'.$_POST['email'].'" AND department="'.$_POST['department'].'" ';
+			$result = mysqli_query($link, $sql);
+
+			while ($row = mysqli_fetch_assoc($result)) {
+				if ($row["result"] > 0)
+				{
+					echo 200;
+				}
+				else
+				{
+					echo "error";
+				}
+			}
+		}
 
 	}
 ?>  
-<!DOCTYPE html>
-<html>
-<head>
-	<title>
-		chat
-	</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/checkUser/checkUser.css">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-</head>  
-<body>
-	<script type="text/javascript" src="js/functions.js"></script>
-	<script type="text/javascript" src="js/module.js"></script>
-	<script type="text/javascript" src="js/checkUser.js"></script>
-</body>

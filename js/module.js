@@ -450,12 +450,16 @@ class ButtonAddNewUser extends Button
 
 	addUser(name, email, department)
 	{
-		console.log(true)
+		
 		let data = 'name='+name+'&email='+ email+'&department='+ department,
-		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data)
-		sendUserData.then(function(massage)
+		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
+		sendUserData.then(function(message)
 			{
-				console.log("hi")
+				console.log(message)
+				if (message == 200)
+				{
+					mainContent.addEmploye(name, email, department);
+				}
 			}
 		)
 	}
@@ -580,6 +584,12 @@ class MainContent extends Form
 		)
 		this.employees = new Div(this.obj, ".main-content__employees")
 		this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
+		this.employeesRows = []
+	}
+	addEmploye(name, email, department)
+	{
+		this.employeesRows.push(new EmployeesRow(this.employees.obj, ".main-content__employees-row"))
+		this.employeesRows[this.employeesRows.length - 1].setValue(name, email, department)
 	}
 }
 
@@ -592,11 +602,19 @@ class EmployeesRow extends Div
 		this.name.insertPlaceholder("Имя")
 		this.email = new Input(this.obj, ".main-content__input_email", "email")
 		this.email.insertPlaceholder("email")
+		this.department = new Input(this.obj, ".main-content__input_email", "text")
+		this.department.insertPlaceholder("отдел")
 		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
 		this.btnChange.setValue("Изменить")
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Удалить")
 
+	}
+	setValue(name, email, department)
+	{
+		this.name.obj.value = name;
+		this.email.obj.value = email;
+		this.department.obj.value = department;
 	}
 }
 
@@ -618,6 +636,7 @@ class ModalAddEmpl extends Form
 				email = this.email.getText(),
 				department = this.department.getText();
 				this.btnAdd.addUser(name, email, department)
+				this.obj.remove()
 			}
 		)
 	}

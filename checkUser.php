@@ -64,6 +64,8 @@
 </head>  
 <body>
 	
+	<!-- подулючаем фунциии -->
+	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/module.js"></script>
 	<script type="text/javascript" src="js/checkUser.js"></script>
 </body>
