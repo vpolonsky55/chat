@@ -11,7 +11,7 @@
 	}
 	else 
 	{
-		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']))
+		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['add']))
 		{
 
 			// создание нового пользователя в таблице user (выполняется 1 раз)
@@ -31,6 +31,17 @@
 					echo "error";
 				}
 			}
+		}
+		if (isset($_POST['getAllEmploys']))
+		{
+			$sql = 'SELECT name, email, department FROM `admin_manager_users`';
+			$result = mysqli_query($link, $sql);
+			$users = array();
+			while ($row = mysqli_fetch_assoc($result)) {
+				$users[] = array("name" => $row["name"], "email" => $row["email"], "department" => $row["department"]);
+			}
+			echo json_encode($users);
+
 		}
 
 	}

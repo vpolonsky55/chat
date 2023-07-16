@@ -451,8 +451,9 @@ class ButtonAddNewUser extends Button
 	addUser(name, email, department)
 	{
 		
-		let data = 'name='+name+'&email='+ email+'&department='+ department,
+		let data = 'name='+name+'&email='+ email+'&department='+ department+'&add=1',
 		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
+
 		sendUserData.then(function(message)
 			{
 				console.log(message)
@@ -585,6 +586,16 @@ class MainContent extends Form
 		this.employees = new Div(this.obj, ".main-content__employees")
 		this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
 		this.employeesRows = []
+		this.eploysList =  send("POST", 'http://localhost/chat/admin/admin_manager_users.php', "getAllEmploys=1");
+		this.eploysList.then( (emloyes) =>
+			{
+				emloyes.forEach(value => {
+					this.addEmploye(value["name"], value["email"], value["department"]);				
+				});  
+			}
+		)
+
+
 	}
 	addEmploye(name, email, department)
 	{
@@ -606,6 +617,16 @@ class EmployeesRow extends Div
 		this.department.insertPlaceholder("отдел")
 		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
 		this.btnChange.setValue("Изменить")
+		this.btnChange.obj.addEventListener("click", (event) =>
+			{
+				let name = this.name.getText(), // взять значение поля из имени
+				email = this.email.getText(), // взять значение поля из mail
+				department = this.department.getText(); // взять значение поля из отдела
+				this.emplModalChange = new ModalAddChange(document.body, ".modal-admin") // создание модального окна
+				this.btnAdd.addUser(name, email, department) // можно оставить так
+				this.obj.remove()
+			}
+		)
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Удалить")
 
@@ -618,6 +639,7 @@ class EmployeesRow extends Div
 	}
 }
 
+// модальное окно "добавление сотрудника"
 class ModalAddEmpl extends Form
 {
 	constructor(...args)
@@ -626,16 +648,60 @@ class ModalAddEmpl extends Form
 		this.name = new Input(this.obj, ".admin-modal__name", "text")
 		this.email = new Input(this.obj, ".admin-modal__email", "text")
 		this.department = new Input(this.obj, ".admin-modal__department", "text")
+		
 		this.btnAdd = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
 		this.btnAdd.setValue("Добавить")
-		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
-		this.btnCancel.setValue("Отменить")
 		this.btnAdd.obj.addEventListener("click", (event) =>
 			{
 				let name = this.name.getText(),
 				email = this.email.getText(),
 				department = this.department.getText();
 				this.btnAdd.addUser(name, email, department)
+				this.obj.remove()
+			}
+		)
+
+		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
+		this.btnCancel.setValue("Отменить")
+		this.btnCancel.obj.addEventListener("click", (event) =>
+			{
+				this.obj.remove()
+			}
+		)
+	}
+}
+
+// модальное окно "изменение сотрудника"
+class ModalAddChange extends Form
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.name = new Input(this.obj, ".admin-modal__name", "text")
+		// добавить текст из поля имя строки EmployeesRow
+
+		this.email = new Input(this.obj, ".admin-modal__email", "text")
+		// добавить текст из поля email строки EmployeesRow
+
+		this.department = new Input(this.obj, ".admin-modal__department", "text")
+		// добавить текст из поля отдел строки EmployeesRow
+
+		this.btnModalChange = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
+		this.btnModalChange.setValue("Изменить")
+		this.btnModalChange.obj.addEventListener("click", (event) =>
+			{
+				let name = this.name.getText(),
+				email = this.email.getText(),
+				department = this.department.getText();
+				this.btnModalChange.addUser(name, email, department)
+				this.obj.remove()
+			}
+		)
+
+		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
+		this.btnCancel.setValue("Отменить")
+		this.btnCancel.obj.addEventListener("click", (event) =>
+			{
 				this.obj.remove()
 			}
 		)
