@@ -14,7 +14,6 @@
 		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['add']))
 		{
 
-			// создание нового пользователя в таблице user (выполняется 1 раз)
 			$sql = 'insert into admin_manager_users (name, email, department) values("'.$_POST['name'].'", "'.$_POST['email'].'", "'.$_POST['department'].'")'; 
 			$result = mysqli_query($link, $sql);
 			
@@ -32,6 +31,30 @@
 				}
 			}
 		}
+
+// ////////////
+		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['change']))
+		{
+			echo 111;
+			// $sql = 'insert into admin_manager_users (name, email, department) values("'.$_POST['name'].'", "'.$_POST['email'].'", "'.$_POST['department'].'")'; 
+			// $result = mysqli_query($link, $sql);
+			
+			$sql = 'SELECT COUNT(id) AS result FROM `admin_manager_users` WHERE name="'.$_POST['name'].'" AND email="'.$_POST['email'].'" AND department="'.$_POST['department'].'" ';
+			$result = mysqli_query($link, $sql);
+
+			while ($row = mysqli_fetch_assoc($result)) {
+				if ($row["result"] > 0)
+				{
+					echo 200;
+				}
+				else
+				{
+					echo "error";
+				}
+			}
+		}
+// ///////////
+
 		if (isset($_POST['getAllEmploys']))
 		{
 			$sql = 'SELECT name, email, department FROM `admin_manager_users`';

@@ -296,8 +296,6 @@ class Button extends Input
 	}
 }
 
-
-
 class Link
 {
   constructor(parent, selector, href, id=0)
@@ -467,6 +465,42 @@ class ButtonAddNewUser extends Button
 }
 
 
+
+class ButtonChangeUser extends Button
+{
+	constructor(...args)
+	{
+		super(...args)
+
+
+	}
+
+	changeUser(name, email, department)
+	{
+		console.log(name, email, department)
+		let data = 'name='+name+'&email='+ email+'&department='+ department+'&change=1',
+		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
+
+		sendUserData.then(function(message)
+			{
+				console.log(message)
+				if (message == 200)
+				{
+					mainContent.addEmploye(name, email, department);
+				}
+			}
+		)
+	}
+}
+
+
+
+
+
+
+
+
+
 class SideBar
 {
 	constructor(parent, selectorBg, selCollBtn, selWrapHelp, selWrap)
@@ -622,8 +656,12 @@ class EmployeesRow extends Div
 				let name = this.name.getText(), // взять значение поля из имени
 				email = this.email.getText(), // взять значение поля из mail
 				department = this.department.getText(); // взять значение поля из отдела
+
+
 				this.emplModalChange = new ModalAddChange(document.body, ".modal-admin") // создание модального окна
-				this.btnAdd.addUser(name, email, department) // можно оставить так
+				this.emplModalChange.importValues(this.name.obj.value, this.email.obj.value, this.department.obj.value)
+
+				// this.btnChange.changeUser(name, email, department)      "откуда это?"
 				this.obj.remove()
 			}
 		)
@@ -686,14 +724,14 @@ class ModalAddChange extends Form
 		this.department = new Input(this.obj, ".admin-modal__department", "text")
 		// добавить текст из поля отдел строки EmployeesRow
 
-		this.btnModalChange = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
+		this.btnModalChange = new ButtonChangeUser(this.obj, ".admin-modal__change", "button")
 		this.btnModalChange.setValue("Изменить")
 		this.btnModalChange.obj.addEventListener("click", (event) =>
 			{
 				let name = this.name.getText(),
 				email = this.email.getText(),
 				department = this.department.getText();
-				this.btnModalChange.addUser(name, email, department)
+				this.btnModalChange.changeUser(name, email, department)
 				this.obj.remove()
 			}
 		)
@@ -705,5 +743,12 @@ class ModalAddChange extends Form
 				this.obj.remove()
 			}
 		)
+	}
+	importValues(importName, importMail, importDepartmet)
+	{
+		this.name.obj.value = importName
+		this.email.obj.value = importMail
+		this.department.obj.value = importDepartmet
+
 	}
 }
