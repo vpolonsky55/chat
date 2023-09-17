@@ -11,6 +11,7 @@
 	}
 	else 
 	{
+		// Добавление новой строки в таблице
 		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['add']))
 		{
 
@@ -32,12 +33,11 @@
 			}
 		}
 
-// ////////////
-		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['change']))
+		// смена строки в тоблице
+		if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['department']) && isset($_POST['change']) )
 		{
-			echo 111;
-			// $sql = 'insert into admin_manager_users (name, email, department) values("'.$_POST['name'].'", "'.$_POST['email'].'", "'.$_POST['department'].'")'; 
-			// $result = mysqli_query($link, $sql);
+			$sql = ' UPDATE `admin_manager_users` SET `name`= "'.$_POST['name'].'", `email`="'.$_POST['email'].'",`department`="'.$_POST['department'].'" WHERE `id` =  "'.$_POST['id'].'"';
+			$result = mysqli_query($link, $sql);
 			
 			$sql = 'SELECT COUNT(id) AS result FROM `admin_manager_users` WHERE name="'.$_POST['name'].'" AND email="'.$_POST['email'].'" AND department="'.$_POST['department'].'" ';
 			$result = mysqli_query($link, $sql);
@@ -53,19 +53,43 @@
 				}
 			}
 		}
-// ///////////
+
+		// нахождение последней строк
+		if( isset($_POST['lastId']) )
+		{
+					
+			$sql = 'SELECT MAX(id) AS id FROM `admin_manager_users`';
+			$result = mysqli_query($link, $sql);
+
+			while ($row = mysqli_fetch_assoc($result)) {
+				echo $row["id"];
+			}
+		}
+
 
 		if (isset($_POST['getAllEmploys']))
 		{
-			$sql = 'SELECT name, email, department FROM `admin_manager_users`';
+			$sql = 'SELECT name, email, department, id  FROM `admin_manager_users`';
 			$result = mysqli_query($link, $sql);
 			$users = array();
 			while ($row = mysqli_fetch_assoc($result)) {
-				$users[] = array("name" => $row["name"], "email" => $row["email"], "department" => $row["department"]);
+				$users[] = array("name" => $row["name"], "email" => $row["email"], "department" => $row["department"], "id" => $row["id"]);
 			}
 			echo json_encode($users);
 
 		}
+		if (isset($_POST['getDepartments']))
+		{
+			$sql = 'SELECT `id`, `department` FROM `departments`';
+			$result = mysqli_query($link, $sql);
+			$departments = array();
+			while ($row = mysqli_fetch_assoc($result)) {
+				$departments[] = array("id" => $row["id"], "department" => $row["department"]);
+			}
+			echo json_encode($departments);
+
+		}
+
 
 	}
 ?>  

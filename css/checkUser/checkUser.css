@@ -159,8 +159,9 @@ body{
 	justify-content: space-between;
 	align-items: center;
 }
-.main-content__input_name,
-.main-content__input_email{
+.main-content__input-name,
+.main-content__input-email,
+.main-content__input-department{
 	width: 25%;
 	height: 54px;
 	background: #D9D9D9;

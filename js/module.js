@@ -22,7 +22,6 @@ class Element
     {
       this.obj.id = this.idName.slice(1);
     }
-    //console.log(this.obj.className, this.selector)
   }
   getMe()
   {
@@ -34,7 +33,6 @@ class Div
 {
 	constructor(parent, selector, id=0, value="None")
 	{
-		//console.log(value)
 		this.parent = parent;
 		this.selector = selector;
 		this.obj = document.createElement("div");
@@ -76,12 +74,55 @@ class Div
 	}
 
 }
+class Select
+{
+  constructor(parent, selector, id=0)
+  {
+    this.parent = parent;
+    this.selector = selector;
+    this.obj = document.createElement("select");
+    this.id = id;
+    this.classes = [];
+    this.idName = "";
+		this.options = []    
+    this.parseString();
+    parent.appendChild(this.obj);
+
+  }
+  parseString()
+  {
+    let parse = this.selector.split(" ");
+    this.classes = parse.filter((value)=> value.includes("."));
+    this.classes = this.classes.map(value => value.slice(1)).join(" ");
+    this.obj.className = this.classes;
+    this.idName = parse.filter((value)=> value.includes("#"))[0];
+    if (this.idName)
+    {
+      this.obj.id = this.idName.slice(1);
+    }
+  }
+  getMe()
+  {
+    return this.obj
+  }
+  add(optionText, valueText)
+  {
+  	let option = document.createElement("option")
+  	option.innerText = optionText
+  	option.value = valueText
+  	this.obj.appendChild(option)
+  	this.options.push(option)
+  }
+  getText()
+  {
+  	return this.options[this.obj.selectedIndex].value
+  }
+}
 
 class Form
 {
 	constructor(parent, selector, id=0, value="None", action = "None")
 	{
-		//console.log(value)
 		this.parent = parent;
 		this.selector = selector;
 		this.obj = document.createElement("form");
@@ -208,7 +249,6 @@ class Textarea
 		this.selector = selector;
 		this.obj = document.createElement("textarea");
 		this.text = "";
-		// this.familly = "Sidorov";
 		if (selector[0] == ".")
 		{
 			this.obj.className = selector.slice(1);
@@ -389,7 +429,6 @@ class Avatar
 				let cookie = document.cookie;
 		    	document.cookie = cookie+ "; max-age=-1";
 			}
-			console.log("coockie=", document.cookie)
 			location.href = "auth.php"
 		})
 		this.exit.insertText("Выход");
@@ -457,7 +496,13 @@ class ButtonAddNewUser extends Button
 				console.log(message)
 				if (message == 200)
 				{
-					mainContent.addEmploye(name, email, department);
+					let data = 'lastId=1',
+					getDataId = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
+					sendUserData.then(function(id)
+						{
+							mainContent.addEmploye(name, email, department, id); 
+						}
+					)
 				}
 			}
 		)
@@ -475,30 +520,24 @@ class ButtonChangeUser extends Button
 
 	}
 
-	changeUser(name, email, department)
+	changeUser(name, email, department, id)
 	{
-		console.log(name, email, department)
-		let data = 'name='+name+'&email='+ email+'&department='+ department+'&change=1',
+		let data = 'name='+name+'&email='+ email+'&department='+ department+'&change=1' +  '&id='+id+'', 
 		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
 
 		sendUserData.then(function(message)
 			{
-				console.log(message)
 				if (message == 200)
 				{
-					mainContent.addEmploye(name, email, department);
+					mainContent.addEmploye(name, email, department, id);
+					console.log(name, email, department, id)	
+					
+
 				}
 			}
 		)
 	}
 }
-
-
-
-
-
-
-
 
 
 class SideBar
@@ -618,23 +657,23 @@ class MainContent extends Form
 			}
 		)
 		this.employees = new Div(this.obj, ".main-content__employees")
-		this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
+		// this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
 		this.employeesRows = []
 		this.eploysList =  send("POST", 'http://localhost/chat/admin/admin_manager_users.php', "getAllEmploys=1");
 		this.eploysList.then( (emloyes) =>
 			{
 				emloyes.forEach(value => {
-					this.addEmploye(value["name"], value["email"], value["department"]);				
+					this.addEmploye(value["name"], value["email"], value["department"], value["id"]);				
 				});  
 			}
 		)
 
 
 	}
-	addEmploye(name, email, department)
+	addEmploye(name, email, department, id)
 	{
 		this.employeesRows.push(new EmployeesRow(this.employees.obj, ".main-content__employees-row"))
-		this.employeesRows[this.employeesRows.length - 1].setValue(name, email, department)
+		this.employeesRows[this.employeesRows.length - 1].setValue(name, email, department, id)
 	}
 }
 
@@ -643,37 +682,35 @@ class EmployeesRow extends Div
 	constructor(...args)
 	{
 		super(...args)
-		this.name = new Input(this.obj, ".main-content__input_name", "text")
+		this.name = new Input(this.obj, ".main-content__input-name", "text")
 		this.name.insertPlaceholder("Имя")
-		this.email = new Input(this.obj, ".main-content__input_email", "email")
+		this.email = new Input(this.obj, ".main-content__input-email", "email")
 		this.email.insertPlaceholder("email")
-		this.department = new Input(this.obj, ".main-content__input_email", "text")
+		this.department = new Input(this.obj, ".main-content__input-department", "text")
 		this.department.insertPlaceholder("отдел")
+		this.hidden = new Input(this.obj, ".main-content__input_hid", "hidden")
+
+
 		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
 		this.btnChange.setValue("Изменить")
 		this.btnChange.obj.addEventListener("click", (event) =>
 			{
-				let name = this.name.getText(), // взять значение поля из имени
-				email = this.email.getText(), // взять значение поля из mail
-				department = this.department.getText(); // взять значение поля из отдела
-
-
 				this.emplModalChange = new ModalAddChange(document.body, ".modal-admin") // создание модального окна
-				this.emplModalChange.importValues(this.name.obj.value, this.email.obj.value, this.department.obj.value)
-
-				// this.btnChange.changeUser(name, email, department)      "откуда это?"
-				this.obj.remove()
+				this.emplModalChange.importValues(this.name.obj.value, this.email.obj.value, this.department.obj.value, this.hidden.obj.value) //заполняем поля в модальном окне
 			}
 		)
+
+
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Удалить")
 
 	}
-	setValue(name, email, department)
+	setValue(name, email, department, id)
 	{
 		this.name.obj.value = name;
 		this.email.obj.value = email;
 		this.department.obj.value = department;
+		this.hidden.obj.value = id
 	}
 }
 
@@ -685,7 +722,21 @@ class ModalAddEmpl extends Form
 		super(...args)
 		this.name = new Input(this.obj, ".admin-modal__name", "text")
 		this.email = new Input(this.obj, ".admin-modal__email", "text")
-		this.department = new Input(this.obj, ".admin-modal__department", "text")
+
+		this.department = new Select(this.obj, ".admin-modal__department")
+		let data = 'getDepartments=1', 
+		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+		sendDepartments.then((departmentsText) =>
+		{
+			departmentsText.forEach((department) =>
+				{
+					let optionText = department['department'],
+					optionValue = department['id'];
+					this.department.add(optionText, optionValue)				
+				}
+			)
+			
+		})
 		
 		this.btnAdd = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
 		this.btnAdd.setValue("Добавить")
@@ -716,13 +767,9 @@ class ModalAddChange extends Form
 	{
 		super(...args)
 		this.name = new Input(this.obj, ".admin-modal__name", "text")
-		// добавить текст из поля имя строки EmployeesRow
-
 		this.email = new Input(this.obj, ".admin-modal__email", "text")
-		// добавить текст из поля email строки EmployeesRow
-
 		this.department = new Input(this.obj, ".admin-modal__department", "text")
-		// добавить текст из поля отдел строки EmployeesRow
+		this.hidden = new Input(this.obj, ".admin-modal__hidden", "hidden")
 
 		this.btnModalChange = new ButtonChangeUser(this.obj, ".admin-modal__change", "button")
 		this.btnModalChange.setValue("Изменить")
@@ -730,9 +777,24 @@ class ModalAddChange extends Form
 			{
 				let name = this.name.getText(),
 				email = this.email.getText(),
-				department = this.department.getText();
-				this.btnModalChange.changeUser(name, email, department)
+				department = this.department.getText(),
+				id = this.hidden.getText();
+				this.btnModalChange.changeUser(name, email, department, id)
 				this.obj.remove()
+/////
+				let hiddenInputs = document.querySelectorAll(".main-content__input_hid")
+				hiddenInputs.forEach(function(hiddenInput, index) 
+					{
+						if (hiddenInput.value == id)
+						{
+							hiddenInput.parentNode.querySelector(".main-content__input-name").value = name
+							hiddenInput.parentNode.querySelector(".main-content__input-email").value = email
+							hiddenInput.parentNode.querySelector(".main-content__input-department").value = department
+
+						}	
+					}
+				);
+/////				
 			}
 		)
 
@@ -744,11 +806,12 @@ class ModalAddChange extends Form
 			}
 		)
 	}
-	importValues(importName, importMail, importDepartmet)
+	importValues(importName, importMail, importDepartmet, importId)
 	{
 		this.name.obj.value = importName
 		this.email.obj.value = importMail
 		this.department.obj.value = importDepartmet
+		this.hidden.obj.value = importId
 
 	}
 }

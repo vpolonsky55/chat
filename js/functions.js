@@ -45,7 +45,7 @@ function send(method, url, data, type="json")
 			{
 				let xhr = new XMLHttpRequest()
 				xhr.open(method, url, true);
-				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // "application/x-www-form-urlencoded" является стандартным типом содержимого для отправки данных формы в URL-кодированном формате. Это означает, что данные формы будут преобразованы в URL-кодированные параметры и отправлены в теле запроса.
 				xhr.responseType = type;
 				xhr.onload = () => 
 				{

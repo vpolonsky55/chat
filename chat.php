@@ -132,7 +132,7 @@ else
 		}
 		elseif(isset($_POST['login']) && isset($_POST['message']) && isset($_POST['edit']) && isset($_POST['id']))
 		{
-			$sql = 'UPDATE messages SET message="'.$_POST['message'].'" WHERE id = '.$_POST['id'];
+			$sql = ' UPDATE messages SET message= "'.$_POST['message'].'" WHERE id = '.$_POST['id'];
 			$result = mysqli_query($link, $sql);
 			
 
