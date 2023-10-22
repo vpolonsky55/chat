@@ -509,8 +509,6 @@ class ButtonAddNewUser extends Button
 	}
 }
 
-
-
 class ButtonChangeUser extends Button
 {
 	constructor(...args)
@@ -538,7 +536,6 @@ class ButtonChangeUser extends Button
 		)
 	}
 }
-
 
 class SideBar
 {
@@ -703,6 +700,30 @@ class EmployeesRow extends Div
 
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Удалить")
+		this.btnDell.obj.addEventListener("click", (event) =>
+			{
+				let rowID = this.hidden.obj.value
+				console.log("ID скрытого поля", rowID)
+				let data = 'rowID='+rowID+'', 
+				sendDesrtoyRow = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+				sendDesrtoyRow.then((destroyRow) =>
+				{
+					if (destroyRow != 200)
+					{
+						alert("ответ: не получилось пробуй еще")					
+					}
+					else
+					{
+						let row = this.obj,
+						parent = row.parentNode;
+						parent.removeChild(row)
+						console.log(row, parent)
+
+					}
+				})
+			}
+		)
+
 
 	}
 	setValue(name, email, department, id)
@@ -781,7 +802,7 @@ class ModalAddChange extends Form
 				id = this.hidden.getText();
 				this.btnModalChange.changeUser(name, email, department, id)
 				this.obj.remove()
-/////
+		/////
 				let hiddenInputs = document.querySelectorAll(".main-content__input_hid")
 				hiddenInputs.forEach(function(hiddenInput, index) 
 					{
@@ -794,7 +815,7 @@ class ModalAddChange extends Form
 						}	
 					}
 				);
-/////				
+		/////				
 			}
 		)
 

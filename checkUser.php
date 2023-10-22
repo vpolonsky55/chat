@@ -53,19 +53,19 @@
 	}
 ?>  
 <!DOCTYPE html>
-<html>
-<head>
-	<title>
-		chat
-	</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/checkUser/checkUser.css">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-</head>  
-<body>
-	
-	<!-- подулючаем фунциии -->
-	<script type="text/javascript" src="js/functions.js"></script>
-	<script type="text/javascript" src="js/module.js"></script>
-	<script type="text/javascript" src="js/checkUser.js"></script>
-</body>
+<html>	
+	<head>
+		<title>
+			chat
+		</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/checkUser/checkUser.css">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	</head>  
+	<body>
+		
+		<script type="text/javascript" src="js/functions.js"></script>
+		<script type="text/javascript" src="js/module.js"></script>
+		<script type="text/javascript" src="js/checkUser.js"></script>
+	</body>
+</html>

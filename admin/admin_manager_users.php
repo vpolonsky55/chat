@@ -89,6 +89,14 @@
 			echo json_encode($departments);
 
 		}
+		if (isset($_POST['rowID']))
+		{
+			$sql = 'DELETE FROM `admin_manager_users` WHERE id= "'.$_POST['rowID'].'"  ';
+			$result = mysqli_query($link, $sql);
+			echo 200;
+			
+		}
+
 
 
 	}
