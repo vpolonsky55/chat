@@ -640,7 +640,8 @@ class TopBar extends Div
 	}
 }
 
-class MainContent extends Form
+// основной контент с сотрудниками
+class MainContentEmployees extends Form
 {
 	constructor(...args)
 	{
@@ -654,7 +655,6 @@ class MainContent extends Form
 			}
 		)
 		this.employees = new Div(this.obj, ".main-content__employees")
-		// this.employeesrow = new EmployeesRow(this.employees.obj, ".main-content__employees-row")
 		this.employeesRows = []
 		this.eploysList =  send("POST", 'http://localhost/chat/admin/admin_manager_users.php', "getAllEmploys=1");
 		this.eploysList.then( (emloyes) =>
@@ -833,6 +833,96 @@ class ModalAddChange extends Form
 		this.email.obj.value = importMail
 		this.department.obj.value = importDepartmet
 		this.hidden.obj.value = importId
+
+	}
+}
+
+
+
+
+// основной контент с отделами
+class MainContentDepartments extends Form
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.btnAdd = new Button(this.obj, ".main-content__btn_add", "button")
+		this.btnAdd.setValue("Добавить")
+		this.btnAdd.obj.addEventListener("click", function(event)
+			{
+				// this.emplModal = new ModalAddEmpl(document.body, ".modal-admin")
+
+			}
+		)
+
+		this.departments = new Departments(this.obj, ".main-content__departments")
+
+
+
+		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
+		this.btnChange.setValue("Изменить")
+		this.btnChange.obj.addEventListener("click", (event) =>
+			{
+				console.log("Изменить")
+			}
+		)
+
+
+		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
+		this.btnDell.setValue("Упразднить")
+		this.btnDell.obj.addEventListener("click", (event) =>
+			{
+				console.log("блокировка/разблокировка")
+			}
+		)
+
+
+
+	}
+}
+
+class Department extends Button
+{
+	constructor(parent, selector, type, departmentName, employees, description, id)
+	{
+		super(parent, selector, type)
+		this.departmentName = departmentName
+		this.employees = employees
+		this.description = description
+		this.setValue(departmentName)
+		this.id = id
+	}
+}
+
+class Departments extends Div
+{
+	constructor(...args)
+	{
+		super(...args)
+
+		this.department = new Input(this.obj, ".main-content__input-department", "text")
+
+		this.department.insertPlaceholder("отдел")
+		this.hidden = new Input(this.obj, ".main-content__input_hid", "hidden")
+		this.departments = []
+
+
+		let data = 'getDepartments=1', 
+		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+		sendDepartments.then((departmentsText) =>
+		{
+			departmentsText.forEach((department) =>
+				{
+					let name = department['department'],
+					id = department['id'];
+					this.departments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
+
+
+				}
+			)
+			
+		})
+
 
 	}
 }

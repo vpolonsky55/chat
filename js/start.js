@@ -109,24 +109,3 @@ window.onload=function()
 
 	)
 
-	// if (document.cookie == "vpolonsky5@gmail.com=139c4a43fb5870137f476e7a2a09a6f1" )
-	// {
-	// 	start(data);
-	// } 
-	// else
-	// {
-	// 	location="http://localhost/chat/auth.php"		
-	// }
-	
-}
-// document.querySelectorAll('input')[2].addEventListener('click', function (event) 
-// 	{
-// 		click = 1
-// 		let form = document.querySelector('form'),
-// 		smTh = document.querySelectorAll('input')[0],
-// 		smTh2 =  document.querySelectorAll('input')[1], 
-// 		data = 'login='+smTh.value+'&something2='+smTh2.value;
-
-// 		start(data);
-// 	}
-// )
