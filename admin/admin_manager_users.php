@@ -78,6 +78,7 @@
 			echo json_encode($users);
 
 		}
+
 		if (isset($_POST['getDepartments']))
 		{
 			$sql = 'SELECT `id`, `department` FROM `departments`';
@@ -95,6 +96,31 @@
 			$result = mysqli_query($link, $sql);
 			echo 200;
 			
+		}
+
+		// получаем сотрудника из конкретного отдела по идентификатору отдела
+		if (isset($_POST['DepartmentId']))
+		{
+			$sql = 'SELECT `name`, `email`, `department`, `id` FROM `admin_manager_users` WHERE department="'.$_POST['DepartmentId'].'"';
+			$result = mysqli_query($link, $sql);
+			$users = array();
+			while ($row = mysqli_fetch_assoc($result)) {
+				$users[] = array("name" => $row["name"], "email" => $row["email"], "department" => $row["department"], "id" => $row["id"]);
+			}
+			echo json_encode($users);
+
+		}
+		// получаем описание конкретного отдела по идентификатору отдела
+		if (isset($_POST['DepId']))
+		{
+			$sql = 'SELECT `description` FROM `departments` WHERE id='.$_POST['DepId'].' ';
+			$result = mysqli_query($link, $sql);
+			$departments = array();
+			while ($row = mysqli_fetch_assoc($result)) {
+				$departments = array("description" => $row["description"]);
+			}
+			echo json_encode($departments);
+
 		}
 
 

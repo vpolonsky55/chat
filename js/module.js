@@ -1,3 +1,5 @@
+
+
 class Element
 {
   constructor(parent, elementType, selector, id=0)
@@ -569,11 +571,14 @@ class SideBar
 		this.mainMenuTitle.insertText("Рабочее пространство")
 
 		this.sideBarItemEmployees = new Div(this.wrapWorkspace.obj, ".side-bar__item")
+		this.sideBarItemEmployees.obj.addEventListener("click", (event) => {selectItem("employees")})
 		this.employessIcon = new Img(this.sideBarItemEmployees.obj, ".side-bar__icon", "img/icons/empl_icon.png")
 		this.employeesText = new P(this.sideBarItemEmployees.obj, "side-bar__text")
 		this.employeesText.insertText("Cотрудники")
 
 		this.sideBarItemDepartments = new Div(this.wrapWorkspace.obj, ".side-bar__item")
+		this.sideBarItemDepartments.obj.addEventListener("click", (event) => {selectItem("departments")})
+
 		this.employessIcon = new Img(this.sideBarItemDepartments.obj, ".side-bar__icon", "img/icons/department__icon.png")
 		this.departmentsText = new P(this.sideBarItemDepartments.obj, "side-bar__text")
 		this.departmentsText.insertText("Отделы")
@@ -891,6 +896,34 @@ class Department extends Button
 		this.description = description
 		this.setValue(departmentName)
 		this.id = id
+
+		this.getEmployees()
+		this.getDescription()
+	}
+	// получаем список сотрудников
+	getEmployees(employees)
+	{
+		let data = `DepartmentId=${this.id}`,
+		sendDepartmentId = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+		sendDepartmentId.then((employNames) =>
+			{
+			 	employNames.forEach((employName) =>
+					{
+						this.employees.push(employName["name"])
+					}
+				)
+			}
+		)
+		console.log(`button ${this.id}`, this.employees)
+	}
+	// получаем описание отдела
+	getDescription(description)
+	{
+		let data = `DepId=${this.id}`,
+		sendDepDescId = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+		sendDepDescId.then((descText) =>
+			console.log(`button ${this.id}`, descText["description"])
+		)
 	}
 }
 
@@ -910,19 +943,17 @@ class Departments extends Div
 		let data = 'getDepartments=1', 
 		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 		sendDepartments.then((departmentsText) =>
-		{
-			departmentsText.forEach((department) =>
-				{
-					let name = department['department'],
-					id = department['id'];
-					this.departments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
-
-
-				}
-			)
+			{
+				departmentsText.forEach((department) =>
+					{
+						let name = department['department'],
+						id = department['id'];
+						this.departments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
+						// console.log(department)
+					}
+				)
+			}
 			
-		})
-
-
+		)
 	}
 }

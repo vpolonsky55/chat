@@ -127,7 +127,7 @@ body{
 	flex-direction: column;
 	align-items: center;
 	width: 20%;
-	border: 1px solid;
+	box-shadow: 0 0 5px black;
 	gap: 10px;
 }
 .departments__department{
