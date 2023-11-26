@@ -1,6 +1,4 @@
-
-
-class Element
+class Elem
 {
   constructor(parent, elementType, selector, id=0)
   {
@@ -74,8 +72,13 @@ class Div
 	{
 		return this.value;
 	}
+	removeChildren()
+	{
+		this.obj.innerHTML = ""
+	}
 
 }
+
 class Select
 {
   constructor(parent, selector, id=0)
@@ -86,10 +89,9 @@ class Select
     this.id = id;
     this.classes = [];
     this.idName = "";
-		this.options = []    
+	this.options = []    
     this.parseString();
     parent.appendChild(this.obj);
-
   }
   parseString()
   {
@@ -159,13 +161,11 @@ class Form
 		if (this.idName){
 			this.obj.id = this.idName.slice(1);
 		}
-
 	}
 	getValue()
 	{
 		return this.value;
 	}
-
 }
 
 class Img
@@ -188,17 +188,14 @@ class Img
 		this.obj.src = url;
 		parent.appendChild(this.obj);
 	}
-	
 	getMe()
 	{
 		return this.obj
 	}
-	
 	setUrl(url)
 	{
 		this.obj.src = url;
 	}
-
 	getId()
 	{
 		return this.id;
@@ -278,7 +275,6 @@ class Textarea
 	{
 		this.obj.addEventListener(event, behavior)
 	}
-	
 }
 
 class Input
@@ -322,7 +318,6 @@ class Input
 	{
 		this.obj.addEventListener(event, behavior)
 	}
-	
 }
 
 class Button extends Input
@@ -330,7 +325,6 @@ class Button extends Input
 	constructor(...args)
 	{
 		super(...args)
-
 	}
 	setValue(value)
 	{
@@ -379,7 +373,6 @@ class Link
   }
 }
 
-
 class Modal
 {
 	constructor(parent, selectorBg, selectorWin, selectorP, selectorBtn, selectorTa)
@@ -402,9 +395,7 @@ class Modal
 	{
 		return this.textarea.getText();
 	}
-
 }
-
 
 // класс для меню с аватаркой справа вверху
 class Avatar
@@ -415,8 +406,8 @@ class Avatar
 		this.login=login;
 		this.getIdFromDB(this.login)
 		this.block=new Div(parent, selectorAv);
-		this.details = new Element(this.block.obj, "details", selectorDet);
-		this.summary = new Element(this.details.obj, "summary", selectorSum);
+		this.details = new Elem(this.block.obj, "details", selectorDet);
+		this.summary = new Elem(this.details.obj, "summary", selectorSum);
 		this.selectorImg=selectorImg
 		this.img = new Img(this.summary.obj, selectorImg, this.url);
 		this.profile = new Link(this.details.obj, selectorLink, "http://localhost/chat/profile.php");
@@ -434,8 +425,6 @@ class Avatar
 			location.href = "auth.php"
 		})
 		this.exit.insertText("Выход");
-		// SELECT id FROM `user` WHERE login = "log" 
-
 	}
 	getIdFromDB(login)
 	{
@@ -452,7 +441,7 @@ class Avatar
 					document.querySelector(this.selectorImg).src=this.url
 				}).catch(function(link) 
 				{
-					console.log(link)
+					// console.log(link)
 					
 				})
 			}
@@ -465,8 +454,8 @@ class Avatar
 	{
 		this.img.setUrl(url);
 	}
-	
 }
+
 class ProfileAvatar extends Avatar
 {
 	constructor(...args)
@@ -475,7 +464,6 @@ class ProfileAvatar extends Avatar
         this.profile.obj.href="http://localhost/chat/index.php"
 		this.profile.insertText("Чат");
     }
-
 }
 
 class ButtonAddNewUser extends Button
@@ -483,19 +471,13 @@ class ButtonAddNewUser extends Button
 	constructor(...args)
 	{
 		super(...args)
-
-
 	}
-
 	addUser(name, email, department)
 	{
-		
 		let data = 'name='+name+'&email='+ email+'&department='+ department+'&add=1',
 		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
-
 		sendUserData.then(function(message)
 			{
-				console.log(message)
 				if (message == 200)
 				{
 					let data = 'lastId=1',
@@ -516,23 +498,16 @@ class ButtonChangeUser extends Button
 	constructor(...args)
 	{
 		super(...args)
-
-
 	}
-
 	changeUser(name, email, department, id)
 	{
 		let data = 'name='+name+'&email='+ email+'&department='+ department+'&change=1' +  '&id='+id+'', 
 		sendUserData = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data, "text");
-
 		sendUserData.then(function(message)
 			{
 				if (message == 200)
 				{
 					mainContent.addEmploye(name, email, department, id);
-					console.log(name, email, department, id)	
-					
-
 				}
 			}
 		)
@@ -554,7 +529,6 @@ class SideBar
 		this.titleText = new P(this.titleBlock.obj, ".side-bar__title")
 		this.titleText.insertText("Kомпания")
 
-
 		this.wrapMainMenu = new Div(this.block.obj, ".side-bar__wrap");
 		this.mainMenuTitle = new P(this.wrapMainMenu.obj, ".side-bar__menutitle")
 		this.mainMenuTitle.insertText("ГЛАВНОЕ МЕНЮ")
@@ -563,27 +537,22 @@ class SideBar
 		this.departmentsText = new P(this.sideBarItemPanel.obj, "side-bar__text")
 		this.departmentsText.insertText("Панель администратора")
 
-
-
-
 		this.wrapWorkspace = new Div(this.block.obj, ".side-bar__wrap");
 		this.mainMenuTitle = new P(this.wrapWorkspace.obj, ".side-bar__menutitle")
 		this.mainMenuTitle.insertText("Рабочее пространство")
 
 		this.sideBarItemEmployees = new Div(this.wrapWorkspace.obj, ".side-bar__item")
-		this.sideBarItemEmployees.obj.addEventListener("click", (event) => {selectItem("employees")})
+		this.sideBarItemEmployees.obj.addEventListener("click", (event) => {selectItem("employees")}) //открывает страницу с сотрудниками
 		this.employessIcon = new Img(this.sideBarItemEmployees.obj, ".side-bar__icon", "img/icons/empl_icon.png")
 		this.employeesText = new P(this.sideBarItemEmployees.obj, "side-bar__text")
 		this.employeesText.insertText("Cотрудники")
 
 		this.sideBarItemDepartments = new Div(this.wrapWorkspace.obj, ".side-bar__item")
-		this.sideBarItemDepartments.obj.addEventListener("click", (event) => {selectItem("departments")})
+		this.sideBarItemDepartments.obj.addEventListener("click", (event) => {selectItem("departments")}) //открывает страницу с отделами
 
 		this.employessIcon = new Img(this.sideBarItemDepartments.obj, ".side-bar__icon", "img/icons/department__icon.png")
 		this.departmentsText = new P(this.sideBarItemDepartments.obj, "side-bar__text")
 		this.departmentsText.insertText("Отделы")
-
-
 
 		this.wrapCommon = new Div(this.block.obj, ".side-bar__wrap");
 		this.wrapCommonTitle = new P(this.wrapCommon.obj, ".side-bar__menutitle")
@@ -599,25 +568,23 @@ class SideBar
 		this.settingsText = new P(this.sideBarItemSettings.obj, "side-bar__text")
 		this.settingsText.insertText("Настройки")
 
-
 		this.wrapHelp = new Div(this.block.obj, ".side-bar__wrap-help");
-		
 	}
 	clotting()
+	{
+		let body = document.querySelector("body");
+		body.classList.toggle("body_hidden")
+		if (this.state == true)
 		{
-			let body = document.querySelector("body");
-			body.classList.toggle("body_hidden")
-			if (this.state == true)
-			{
-				this.state = false;
-				this.collaps.obj.style ="left: -20px; transform: rotate(-180deg)";
-			}
-			else
-			{
-				this.state = true;
-				this.collaps.obj.style ="transform: rotate(0deg)";
-			}
+			this.state = false;
+			this.collaps.obj.style ="left: -20px; transform: rotate(-180deg)";
 		}
+		else
+		{
+			this.state = true;
+			this.collaps.obj.style ="transform: rotate(0deg)";
+		}
+	}
 }
 
 class TopBar extends Div
@@ -633,11 +600,8 @@ class TopBar extends Div
 		this.avatar = new Img(this.wrapper.obj, ".top-bar__avatar", "img/admin_face/top-bar__avatar.png")
 		this.topBarText = new P(this.wrapper.obj, ".top-bar__text")
 		this.topBarText.insertText("Имя Админа")
-		this.topBarDetails = new Element(this.wrapper.obj, "details", ".top-bar__select");
-		this.topBarSummary = new Element(this.topBarDetails.obj, "summary", ".top-bar__summary");
-
-
-
+		this.topBarDetails = new Elem(this.wrapper.obj, "details", ".top-bar__select");
+		this.topBarSummary = new Elem(this.topBarDetails.obj, "summary", ".top-bar__summary");
 	}
 	insertText(text)
 	{
@@ -656,7 +620,6 @@ class MainContentEmployees extends Form
 		this.btnAdd.obj.addEventListener("click", function(event)
 			{
 				this.emplModal = new ModalAddEmpl(document.body, ".modal-admin")
-
 			}
 		)
 		this.employees = new Div(this.obj, ".main-content__employees")
@@ -664,13 +627,13 @@ class MainContentEmployees extends Form
 		this.eploysList =  send("POST", 'http://localhost/chat/admin/admin_manager_users.php', "getAllEmploys=1");
 		this.eploysList.then( (emloyes) =>
 			{
-				emloyes.forEach(value => {
-					this.addEmploye(value["name"], value["email"], value["department"], value["id"]);				
-				});  
+				emloyes.forEach(value => 
+					{
+						this.addEmploye(value["name"], value["email"], value["department"], value["id"]);				
+					}
+				)
 			}
 		)
-
-
 	}
 	addEmploye(name, email, department, id)
 	{
@@ -691,8 +654,6 @@ class EmployeesRow extends Div
 		this.department = new Input(this.obj, ".main-content__input-department", "text")
 		this.department.insertPlaceholder("отдел")
 		this.hidden = new Input(this.obj, ".main-content__input_hid", "hidden")
-
-
 		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
 		this.btnChange.setValue("Изменить")
 		this.btnChange.obj.addEventListener("click", (event) =>
@@ -701,35 +662,29 @@ class EmployeesRow extends Div
 				this.emplModalChange.importValues(this.name.obj.value, this.email.obj.value, this.department.obj.value, this.hidden.obj.value) //заполняем поля в модальном окне
 			}
 		)
-
-
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Удалить")
 		this.btnDell.obj.addEventListener("click", (event) =>
 			{
 				let rowID = this.hidden.obj.value
-				console.log("ID скрытого поля", rowID)
-				let data = 'rowID='+rowID+'', 
+				let data = 'rowID='+rowID+'',
 				sendDesrtoyRow = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 				sendDesrtoyRow.then((destroyRow) =>
-				{
-					if (destroyRow != 200)
 					{
-						alert("ответ: не получилось пробуй еще")					
+						if (destroyRow != 200)
+						{
+							alert("ответ: не получилось пробуй еще")					
+						}
+						else
+						{
+							let row = this.obj,
+							parent = row.parentNode;
+							parent.removeChild(row)
+						}
 					}
-					else
-					{
-						let row = this.obj,
-						parent = row.parentNode;
-						parent.removeChild(row)
-						console.log(row, parent)
-
-					}
-				})
+				)
 			}
 		)
-
-
 	}
 	setValue(name, email, department, id)
 	{
@@ -748,22 +703,20 @@ class ModalAddEmpl extends Form
 		super(...args)
 		this.name = new Input(this.obj, ".admin-modal__name", "text")
 		this.email = new Input(this.obj, ".admin-modal__email", "text")
-
 		this.department = new Select(this.obj, ".admin-modal__department")
 		let data = 'getDepartments=1', 
 		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 		sendDepartments.then((departmentsText) =>
-		{
-			departmentsText.forEach((department) =>
-				{
-					let optionText = department['department'],
-					optionValue = department['id'];
-					this.department.add(optionText, optionValue)				
-				}
-			)
-			
-		})
-		
+			{
+				departmentsText.forEach((department) =>
+					{
+						let optionText = department['department'],
+						optionValue = department['id'];
+						this.department.add(optionText, optionValue)				
+					}
+				)
+			}
+		)
 		this.btnAdd = new ButtonAddNewUser(this.obj, ".admin-modal__add", "button")
 		this.btnAdd.setValue("Добавить")
 		this.btnAdd.obj.addEventListener("click", (event) =>
@@ -775,7 +728,6 @@ class ModalAddEmpl extends Form
 				this.obj.remove()
 			}
 		)
-
 		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
 		this.btnCancel.setValue("Отменить")
 		this.btnCancel.obj.addEventListener("click", (event) =>
@@ -796,7 +748,6 @@ class ModalAddChange extends Form
 		this.email = new Input(this.obj, ".admin-modal__email", "text")
 		this.department = new Input(this.obj, ".admin-modal__department", "text")
 		this.hidden = new Input(this.obj, ".admin-modal__hidden", "hidden")
-
 		this.btnModalChange = new ButtonChangeUser(this.obj, ".admin-modal__change", "button")
 		this.btnModalChange.setValue("Изменить")
 		this.btnModalChange.obj.addEventListener("click", (event) =>
@@ -807,7 +758,6 @@ class ModalAddChange extends Form
 				id = this.hidden.getText();
 				this.btnModalChange.changeUser(name, email, department, id)
 				this.obj.remove()
-		/////
 				let hiddenInputs = document.querySelectorAll(".main-content__input_hid")
 				hiddenInputs.forEach(function(hiddenInput, index) 
 					{
@@ -819,11 +769,10 @@ class ModalAddChange extends Form
 
 						}	
 					}
-				);
-		/////				
+				)
+				window.setTimeout(selectItem("employees"), 600) // без задержки не срабатывает
 			}
 		)
-
 		this.btnCancel = new ButtonAddNewUser(this.obj, ".admin-modal__cancel", "button")
 		this.btnCancel.setValue("Отменить")
 		this.btnCancel.obj.addEventListener("click", (event) =>
@@ -838,12 +787,8 @@ class ModalAddChange extends Form
 		this.email.obj.value = importMail
 		this.department.obj.value = importDepartmet
 		this.hidden.obj.value = importId
-
 	}
 }
-
-
-
 
 // основной контент с отделами
 class MainContentDepartments extends Form
@@ -856,33 +801,27 @@ class MainContentDepartments extends Form
 		this.btnAdd.obj.addEventListener("click", function(event)
 			{
 				// this.emplModal = new ModalAddEmpl(document.body, ".modal-admin")
-
+				alert('this.btnAdd.obj.addEventListener("click", function(event),   необходимо  добавить модальное окно с добавлением отдела !!!!!!!!!!!!!!!!')
 			}
 		)
-
-		this.departments = new Departments(this.obj, ".main-content__departments")
-
-
-
 		this.btnChange = new Button(this.obj, ".main-content__btn_change", "button")
 		this.btnChange.setValue("Изменить")
 		this.btnChange.obj.addEventListener("click", (event) =>
-			{
-				console.log("Изменить")
-			}
+		{
+			alert('this.btnChange.obj.addEventListener("click", (event),  необходимо добавить модальное окно с изменением отдела !!!!!!!!!!!!!!!!')
+		}
 		)
-
-
 		this.btnDell = new Button(this.obj, ".main-content__btn_del", "button")
 		this.btnDell.setValue("Упразднить")
 		this.btnDell.obj.addEventListener("click", (event) =>
-			{
-				console.log("блокировка/разблокировка")
-			}
+		{
+			alert("блокировка/разблокировка")
+		}
 		)
 
-
-
+		this.departments = new Departments(this.obj, ".main-content__departments") //блок список отделов
+		this.departmentEmplBlock = new DepartmentEmplBlock(this.obj, ".main-content__departmentEmplBlock") // блко список сотрудников
+		this.departmentDescrBlock = new DepartmentDescription(this.obj, ".main-content__departmentDescrBlock")
 	}
 }
 
@@ -896,7 +835,6 @@ class Department extends Button
 		this.description = description
 		this.setValue(departmentName)
 		this.id = id
-
 		this.getEmployees()
 		this.getDescription()
 	}
@@ -907,22 +845,24 @@ class Department extends Button
 		sendDepartmentId = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 		sendDepartmentId.then((employNames) =>
 			{
-			 	employNames.forEach((employName) =>
+				employNames.forEach((employName, index) =>
 					{
 						this.employees.push(employName["name"])
 					}
 				)
 			}
 		)
-		console.log(`button ${this.id}`, this.employees)
 	}
-	// получаем описание отдела
+	// получаем описание отдела 
 	getDescription(description)
 	{
 		let data = `DepId=${this.id}`,
 		sendDepDescId = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 		sendDepDescId.then((descText) =>
-			console.log(`button ${this.id}`, descText["description"])
+			{
+				this.description = descText["description"]
+				console.log(`button ${this.id}`, this.description)
+			}
 		)
 	}
 }
@@ -932,14 +872,8 @@ class Departments extends Div
 	constructor(...args)
 	{
 		super(...args)
-
-		this.department = new Input(this.obj, ".main-content__input-department", "text")
-
-		this.department.insertPlaceholder("отдел")
 		this.hidden = new Input(this.obj, ".main-content__input_hid", "hidden")
 		this.departments = []
-
-
 		let data = 'getDepartments=1', 
 		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
 		sendDepartments.then((departmentsText) =>
@@ -949,11 +883,53 @@ class Departments extends Div
 						let name = department['department'],
 						id = department['id'];
 						this.departments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
-						// console.log(department)
+						if(Number(department["status"]) === 0)
+						{
+							this.departments[this.departments.length - 1].obj.style.visibility = "hidden";
+						}
+					}
+				)
+				this.departments.forEach(dep =>
+					{
+						dep.addEvent("click", (event) => 
+							{
+								let departmentEmplBlock = mainContentDepartments.departmentEmplBlock
+								let departmentDescriptionBlock = mainContentDepartments.departmentDescrBlock
+								let employees = dep.employees
+								let description = dep.description;
+								[departmentEmplBlock, departmentDescriptionBlock].forEach(el => el.removeChildren())
+								employees.forEach(employEl => 
+									{
+										let textEmploy	= new P(departmentEmplBlock.obj, ".departments__text-employ")
+										textEmploy.insertText(employEl)
+									}
+								)
+								let textDescription = new P(departmentDescriptionBlock.obj, ".department__text-description")
+								textDescription.insertText(description)
+
+							}
+						)
 					}
 				)
 			}
-			
 		)
+	}
+}
+
+class DepartmentEmplBlock extends Div
+{
+	constructor(...args)
+	{
+		super(...args)
+		
+	}
+	
+}
+
+class DepartmentDescription extends Div
+{
+	constructor(...args)
+	{
+		super(...args)
 	}
 }

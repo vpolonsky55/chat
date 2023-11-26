@@ -81,11 +81,11 @@
 
 		if (isset($_POST['getDepartments']))
 		{
-			$sql = 'SELECT `id`, `department` FROM `departments`';
+			$sql = 'SELECT `id`, `department`, `status` FROM `departments`';
 			$result = mysqli_query($link, $sql);
 			$departments = array();
 			while ($row = mysqli_fetch_assoc($result)) {
-				$departments[] = array("id" => $row["id"], "department" => $row["department"]);
+				$departments[] = array("id" => $row["id"], "department" => $row["department"], "status" => $row["status"]);
 			}
 			echo json_encode($departments);
 

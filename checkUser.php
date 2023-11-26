@@ -64,6 +64,7 @@
 	</head>  
 	<body>
 		
+		<script type="text/javascript" src="js/variables.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
 		<script type="text/javascript" src="js/module.js"></script>
 		<script type="text/javascript" src="js/checkUser.js"></script>

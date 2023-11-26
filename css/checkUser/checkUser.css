@@ -112,24 +112,55 @@ body{
 	background: #C4C4C4;
 	padding: 50px;
 	box-sizing: border-box;
+	position: relative;
 }
 
 
 .main-content__employees,
-.main-content__departments
+.main-content__departments,
+.main-content__departmentEmplBlock
 {
 	overflow-y: scroll;
 	height: 60vh;
 }
-.main-content__departments
+.main-content__departments,
+.main-content__departmentEmplBlock,
+.main-content__departmentDescrBlock
+
 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 10px;
+	gap: 10px;
 	width: 20%;
+	height: 70%;
 	box-shadow: 0 0 5px black;
 	gap: 10px;
+	box-sizing: border-box;
 }
+.main-content__departments
+{
+	position: absolute;
+	top: 150px;
+	left: 25%;
+	transform: translate(-50%, 0%);
+}
+.main-content__departmentEmplBlock
+{
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	transform: translate(-50%, 0%);
+}
+.main-content__departmentDescrBlock
+{
+	position: absolute;
+	top: 150px;
+   	left: 75%;
+   	transform: translate(-50%, 0%);
+}
+
 .departments__department{
 	width: 90%;
 	height: 54px;
@@ -154,6 +185,7 @@ body{
 	color: #FFFFFF;
 	border: none;
 	transition: 0.5s;
+	margin: 0 10px;
 }
 .main-content__btn_add:hover,
 .main-content__btn_change:hover,
@@ -208,4 +240,5 @@ body{
 	background: #7B83A1;
 
 }
+
 

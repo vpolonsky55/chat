@@ -7,4 +7,6 @@ login = "",
 p = [],
 click = 0,
 clickWhile = 0,
-avatar = {};
+avatar = {},
+mainContentEmployees = null,
+mainContentDepartments = null;
