@@ -10,3 +10,5 @@ clickWhile = 0,
 avatar = {},
 mainContentEmployees = null,
 mainContentDepartments = null;
+
+document.body.addEventListener("click", (e) => console.log('client', e.clientX, e.clientY, 'screen', e.screenX, e.screenY, 'page', e.pageX, e.pageY, 'xy', e.x, e.y))

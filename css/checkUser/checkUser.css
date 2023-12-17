@@ -226,7 +226,9 @@ body{
 	outline: none;
 }
 
-.modal-admin{
+.modal-admin,
+.lockUnlockDepartment
+{
 	position: absolute;
 	top:50%;
 	left:50%;
@@ -239,6 +241,18 @@ body{
 	align-items: center;
 	background: #7B83A1;
 
+}
+.lockUnlockDepartment{
+	overflow-y: scroll;
+	/* position: relative; */
+}
+.lockUnlockDepartment__close-btn{
+	position: absolute;
+	top: -30px;
+	right: 0;
+	width: 30px;
+	height: 30px;
+	background: url(../../img/icons/closeBtn.png) center/cover no-repeat;
 }
 
 

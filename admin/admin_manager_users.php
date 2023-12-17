@@ -98,6 +98,19 @@
 			
 		}
 
+
+
+
+		if (isset($_POST['departmentStatusDownID']))
+		{
+			$sql = 'UPDATE `departments` SET `status`=1 WHERE id= "'.$_POST['departmentStatusDownID'].'"  ';
+			$result = mysqli_query($link, $sql);
+			echo 200;
+			
+		}
+
+
+
 		// получаем сотрудника из конкретного отдела по идентификатору отдела
 		if (isset($_POST['DepartmentId']))
 		{

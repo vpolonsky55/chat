@@ -815,7 +815,12 @@ class MainContentDepartments extends Form
 		this.btnDell.setValue("Упразднить")
 		this.btnDell.obj.addEventListener("click", (event) =>
 		{
-			alert("блокировка/разблокировка")
+			// alert("блокировка/разблокировка")
+			// модальное окно со всеми отделами и их статусами и кнопкой "упразднить" если статус равен "1" и востановить если статус равен "0" 
+			let lockUnlockDepartment = new LockUnlockDepartment(parent = document.body, ".lockUnlockDepartment")
+			//нажатие на кнопку подразумевает получение id данного отдела и сразу смена ему статуса: если был "0" сделать "1" и наоборот
+			// 
+			// после закрытия окна контент должен обновится
 		}
 		)
 
@@ -861,7 +866,7 @@ class Department extends Button
 		sendDepDescId.then((descText) =>
 			{
 				this.description = descText["description"]
-				console.log(`button ${this.id}`, this.description)
+				// console.log(`button ${this.id}`, this.description)
 			}
 		)
 	}
@@ -883,7 +888,7 @@ class Departments extends Div
 						let name = department['department'],
 						id = department['id'];
 						this.departments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
-						if(Number(department["status"]) === 0)
+						if(Number(department["status"]) === 0) //если статус в базе равен нулю, делаем отдел невидимым
 						{
 							this.departments[this.departments.length - 1].obj.style.visibility = "hidden";
 						}
@@ -932,4 +937,67 @@ class DepartmentDescription extends Div
 	{
 		super(...args)
 	}
+}
+
+// модальное окно блокировка разблокировка
+class LockUnlockDepartment extends Form
+{
+	constructor(...args)
+	{
+		super(...args)
+		this.lkDepartments = []
+		this.closeBtn = new Button(this.obj, ".lockUnlockDepartment__close-btn", "button")
+		
+
+		let data = 'getDepartments=1', 
+		sendDepartments = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+		sendDepartments.then((departmentsText) =>
+			{
+				departmentsText.forEach((department) =>
+					{
+						let name = department['department'],
+						id = department['id'];
+						this.lkDepartments.push(new Department(this.obj, ".departments__department", "button", name, [], '', id)) // добавить в СSS	
+						if(Number(department["status"]) === 0) //если статус в базе равен нулю, делаем отдел коричневым
+						{
+							this.lkDepartments[this.lkDepartments.length - 1].obj.style.background = "brown";
+						}
+					}
+				)
+				this.lkDepartments.forEach(department =>
+					{
+						department.addEvent("click", (event) => 
+							{
+								console.log("нажатие на кнопку подразумевает получение id данного отдела и сразу смена ему статуса: если был '0' сделать '1' и наоборот")
+								console.log(`id отдела - ${department.id}`)
+								// departmentStatusDownID
+
+								let data = `departmentStatusDownID=${department.id}`, 
+								departmentStatusDownID = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
+								departmentStatusDownID.then((response) =>
+									{
+										if (response == 200)
+										{
+											department.obj.style.background = "#D9D9D9";
+											mainContentDepartments.departments.departments.forEach(departmentFromMainInterface =>
+												{
+													if (department.id == departmentFromMainInterface.id)
+													{
+														departmentFromMainInterface.obj.style.visibility = "visible";
+													}
+												}
+											)
+										}
+									}
+								)
+
+							}
+						)
+					}
+				)
+			}
+		)
+
+	}
+
 }
