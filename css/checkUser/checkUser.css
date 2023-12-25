@@ -226,8 +226,7 @@ body{
 	outline: none;
 }
 
-.modal-admin,
-.lockUnlockDepartment
+.modal-admin
 {
 	position: absolute;
 	top:50%;
@@ -242,17 +241,58 @@ body{
 	background: #7B83A1;
 
 }
-.lockUnlockDepartment{
-	overflow-y: scroll;
-	/* position: relative; */
-}
-.lockUnlockDepartment__close-btn{
+.lockUnlockDepartment
+{
 	position: absolute;
-	top: -30px;
-	right: 0;
-	width: 30px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	height: 60vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	/* background: #7B83A1; */
+
+}
+
+.lockUnlockDepartment__close-btn{
+	/* position: absolute; */
+	/* top: -30px; */
+	/* right: 0; */
+	width: 26px;
 	height: 30px;
 	background: url(../../img/icons/closeBtn.png) center/cover no-repeat;
+	align-self: flex-end;
+	border: none;
+	outline: none;
 }
+
+.lockUnlockDepartment__wrapper
+{
+	/* position: absolute;
+	top:50%;
+	left:50%; */
+	/* transform: translate(-50%, -40%); */
+	/* width: 50%; */
+	width: calc(100% - 55px);
+	/* height: 50vh; */
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: space-around; */
+	justify-content: flex-start;
+	gap: 10px;
+	align-items: center;
+	background: #7B83A1;
+	overflow-y: scroll;
+	padding: 30px;
+	box-sizing: border-box;
+	box-shadow: 0 0 20px lavenderblush;
+}
+
+
+
 
 
