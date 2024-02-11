@@ -988,11 +988,12 @@ class LockUnlockDepartment extends Form
 					{
 						department.addEvent("click", (event) => 
 							{
-								console.log("нажатие на кнопку подразумевает получение id данного отдела и сразу смена ему статуса: если был '0' сделать '1' и наоборот")
-								console.log(`id отдела - ${department.id}`, department)
+								// console.log("нажатие на кнопку подразумевает получение id данного отдела и сразу смена ему статуса: если был '0' сделать '1' и наоборот")
+								// console.log(`id отдела - ${department.id}`, department)
 								
 								// условие если статус равен 1 или два
-								console.log(`deparnment.status=${department.status}`);
+								// console.log(`deparnment.status=${department.status}`);
+
 								let departmentStatus = department.status=="1"?0:1,
 								data = `departmentStatusDownID=${department.id}&status=${departmentStatus}`, 
 								departmentStatusDownID = send('POST', 'http://localhost/chat/admin/admin_manager_users.php', data);
@@ -1000,15 +1001,32 @@ class LockUnlockDepartment extends Form
 									{
 										if (response == 200)
 										{
-											department.obj.style.background = "#D9D9D9";
-											mainContentDepartments.departments.departments.forEach(departmentFromMainInterface =>
-												{
-													if (department.id == departmentFromMainInterface.id)
+											console.log(`deparnment.status=${department.status}`);
+											console.log(department.obj.style.background);
+											if (department.status == 0)
+											{
+												department.obj.style.background = "#D9D9D9";
+												mainContentDepartments.departments.departments.forEach(departmentFromMainInterface =>
 													{
-														departmentFromMainInterface.obj.style.visibility = "visible";
+														if (department.id == departmentFromMainInterface.id)
+														{
+															departmentFromMainInterface.obj.style.visibility = "visible";
+														}
 													}
-												}
-											)
+												)
+											}
+											else
+											{
+												department.obj.style.background = "brown";
+												mainContentDepartments.departments.departments.forEach(departmentFromMainInterface =>
+													{
+														if (department.id == departmentFromMainInterface.id)
+														{
+															departmentFromMainInterface.obj.style.visibility = "hidden";
+														}
+													}
+												)
+											}
 										}
 									}
 								)
