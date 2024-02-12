@@ -37,29 +37,36 @@ function replaceSmile(mess, arg){
 	 return mess
 }
 
-function send(method, url, data, type="json")
+function send(method, url, data, typeResponse="json")
 {
 	return new Promise((resolve, reject) => 
 		{
+			const TIME_BEFORE_SENDING = 30;
 			setTimeout(function()
-			{
-				let xhr = new XMLHttpRequest()
-				xhr.open(method, url, true);
-				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // "application/x-www-form-urlencoded" является стандартным типом содержимого для отправки данных формы в URL-кодированном формате. Это означает, что данные формы будут преобразованы в URL-кодированные параметры и отправлены в теле запроса.
-				xhr.responseType = type;
-				xhr.onload = () => 
+			{	
+				const ERROR_RESPONSE_FROM_SERVER = 400;
+				const ASYNCRONOUS_REQUEST = true;
+				const HEADER_CONTENT_TYPE = 'Content-Type';
+				const DATA_TYPE_URL_ENCODED = 'application/x-www-form-urlencoded';
+				const TEXT_EROR = "ошибка";
+
+				let connectWithServer = new XMLHttpRequest();
+				connectWithServer.open(method, url, ASYNCRONOUS_REQUEST);
+				connectWithServer.setRequestHeader(HEADER_CONTENT_TYPE, DATA_TYPE_URL_ENCODED); 
+				connectWithServer.responseType = typeResponse;
+				connectWithServer.onload = () => 
 				{
-					if(xhr.status == 400)
+					if(connectWithServer.status == ERROR_RESPONSE_FROM_SERVER)
 					{
-						reject("ошибка")
+						reject(TEXT_EROR);
 					}
 					else
 					{
-						resolve(xhr.response)
+						resolve(connectWithServer.response);
 					}
 				}
-				xhr.send(data)
-			}, 30)
+				connectWithServer.send(data);
+			}, TIME_BEFORE_SENDING);
 		}
 	)
 }

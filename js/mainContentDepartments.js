@@ -35,7 +35,7 @@ class MainContentDepartments extends Form
 		this.departments = new Departments(this.obj, ".main-content__departments") //блок список отделов
 		this.departmentEmplBlock = new DepartmentEmplBlock(this.obj, ".main-content__departmentEmplBlock") // блко список сотрудников
 		this.departmentDescrBlock = new DepartmentDescription(this.obj, ".main-content__departmentDescrBlock")
-	}1
+	}
 	destroyModalLockUnlockDepartment()
 	{
 		this.lockUnlockDepartment.obj.remove()
