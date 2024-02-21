@@ -1,37 +1,41 @@
-let smiles = {
+let emojis = {
 	":)":"😀",
 	":D":"😁",
 },
-screen = {
+screenEmojis = {
 	":)" : /:\)/,
 	":D":":D",
 },
-retEm={};
+returnEmojis={};
 
-function createReplace(){
-	let keys = Object.keys(smiles),
-	values = Object.values(smiles);
-	for (let i = keys.length-1; i >= 0; i--) 
+function createReplaceEmoji(){
+	let emojisKeys = Object.keys(emojis),
+	emojisValues = Object.values(emojis),
+	numberOfEmojisKeys = emojisKeys.length-1; 
+	for (let cuurentEmojisIndex = numberOfEmojisKeys; cuurentEmojisIndex >= 0; cuurentEmojisIndex--) 
 	{
-		retEm[values[i]] = keys[i];
+		returnEmojis[emojisValues[cuurentEmojisIndex]] = emojisKeys[cuurentEmojisIndex];
 	}
 }
-createReplace();
+createReplaceEmoji();
 
-function replaceSmile(mess, arg){
+function replaceSmile(mess, arg)
+{
 	 if (arg) 
 	 {
-		for (let smileChar in smiles)
+		for (let emojisChar in emojis)
 		{
-		 		mess = mess.replace(new RegExp (screen[smileChar], 'g'), smiles[smileChar])
+			let allCurrentEmojiSimbolsInText = new RegExp (screenEmojis[emojisChar], 'g'),
+			currentEmoji = emojis[emojisChar]
+			mess = mess.replace(allCurrentEmojiSimbolsInText, currentEmoji)
 		}
  	}
  	else
 	{
-		for (let smileChar in retEm)
+		for (let emojisChar in returnEmojis) // если сделать также как в 26 строке буте повтор кода
 		{
-		 console.log(smileChar)
-	 		mess = mess.replace(new RegExp (smileChar, 'g'), retEm[smileChar])
+		 	console.log(emojisChar)
+	 		mess = mess.replace(new RegExp (emojisChar, 'g'), returnEmojis[emojisChar])
 		}
 	}
 	 return mess
