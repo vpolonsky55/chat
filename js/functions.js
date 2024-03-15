@@ -1,3 +1,7 @@
+const INDEX_OUT_OF_RANGE = 1;
+const FIRST_INDEX = 0;
+const GLOBAL_FIND = 'g';
+
 let emojis = {
 	":)":"😀",
 	":D":"😁",
@@ -6,39 +10,60 @@ screenEmojis = {
 	":)" : /:\)/,
 	":D":":D",
 },
-returnEmojis={};
+returnEmojis = {};
 
 function createReplaceEmoji(){
-	let emojisKeys = Object.keys(emojis),
-	emojisValues = Object.values(emojis),
-	numberOfEmojisKeys = emojisKeys.length-1; 
-	for (let cuurentEmojisIndex = numberOfEmojisKeys; cuurentEmojisIndex >= 0; cuurentEmojisIndex--) 
+	let emojisKeys = getKeys(emojis),
+	emojisValues = getValues(emojis),
+	lastIndexOfEmojisKeys = emojisKeys.length - INDEX_OUT_OF_RANGE; 
+
+	for (let cuurentEmojisIndex = lastIndexOfEmojisKeys; cuurentEmojisIndex >= FIRST_INDEX; cuurentEmojisIndex--) 
 	{
-		returnEmojis[emojisValues[cuurentEmojisIndex]] = emojisKeys[cuurentEmojisIndex];
+		let emojiKeyValue = emojisValues[cuurentEmojisIndex];
+		returnEmojis[emojiKeyValue] = emojisKeys[cuurentEmojisIndex];
 	}
 }
+
+let getKeys = assocArray => Object.keys(assocArray);
+let getValues = assocArray => Object.values(assocArray);
+
 createReplaceEmoji();
 
-function replaceSmile(mess, arg)
+class RegularExpressions
 {
-	 if (arg) 
-	 {
+	constructor(string, expression)
+	{
+		this.regularExpressions = new RegExp (string, expression);
+	}
+
+	replace(whatToReplace, substitute)
+	{
+		return whatToReplace.replace(this.regularExpressions, substitute)
+	}
+}
+
+function replaceSmile(message, arg)
+{
+	if (arg) 
+	{
 		for (let emojisChar in emojis)
 		{
-			let allCurrentEmojiSimbolsInText = new RegExp (screenEmojis[emojisChar], 'g'),
-			currentEmoji = emojis[emojisChar]
-			mess = mess.replace(allCurrentEmojiSimbolsInText, currentEmoji)
+			let emojiValue = screenEmojis[emojisChar];
+			let currentEmojiSimbol = emojis[emojisChar];
+			let allCurrentEmojiScreensInText = new RegularExpressions(emojiValue, GLOBAL_FIND);
+			message = allCurrentEmojiScreensInText.replace(message, currentEmojiSimbol)
 		}
  	}
  	else
 	{
-		for (let emojisChar in returnEmojis) // если сделать также как в 26 строке буте повтор кода
+		for (let emojisChar in returnEmojis)
 		{
-		 	console.log(emojisChar)
-	 		mess = mess.replace(new RegExp (emojisChar, 'g'), returnEmojis[emojisChar])
+			let currentEmoji = returnEmojis[emojisChar];
+			let allCurrentEmojiSimbolsInText = new RegularExpressions (emojisChar, GLOBAL_FIND);
+			message = allCurrentEmojiSimbolsInText.replace(message, currentEmoji);
 		}
 	}
-	 return mess
+	 return message
 }
 
 function send(method, url, data, typeResponse="json")
