@@ -20,7 +20,7 @@ class MainContentEmployees extends Form
 
 		this.employeesWraperParent = this.obj
 		this.employeesWraperCssClass = ".main-content__employees"
-		this.employeesWraper = new Div(employeesWraperParent, this.employeesWraperCssClass)
+		this.employeesWraper = new Div(this.employeesWraperParent, this.employeesWraperCssClass)
 		this.employeesRows = []
 		this.eployeesGroup =  send("POST", 'http://localhost/chat/admin/admin_manager_users.php', "getAllEmploys=1");
 		this.eployeesGroup.then( (emloyes) =>

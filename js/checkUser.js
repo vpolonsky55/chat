@@ -2,8 +2,6 @@
 let sideBar = new SideBar(document.querySelector("body"), ".side__bar")
 let topBar = new TopBar(document.querySelector("body"), ".top__bar")
 
-
-
 function selectItem(openContentAdmin)
 {
 	if (openContentAdmin == "employees")

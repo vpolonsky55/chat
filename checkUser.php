@@ -65,7 +65,36 @@
 	<body>
 		<script type="text/javascript" src="js/variables.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
-		<script type="text/javascript" src="js/module.js"></script>
+
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Div.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Elem.js"></script> <!--Необходимо откорректировать (файлы: Avatar.js, )-->
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Form.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Img.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Input.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Button.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Link.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/P.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Select.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Textarea.js"></script>
+
+		<script type="text/javascript" src="js/modules/MVC/view/UI/Avatar.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/ProfileAvatar.js"></script>
+
+		<script type="text/javascript" src="js/modules/MVC/view/UI/ButtonAddNewUser.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/ButtonChangeUser.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/Department.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/DepartmentDescription.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/DepartmentEmplBlock.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/Departments.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/EmployeesRow.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/Modal.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/ModalAddChange.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/ModalAddEmpl.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/SideBar.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/TopBar.js"></script>
+		
+
+		<!-- <script type="text/javascript" src="js/module.js"></script> -->
 		<script type="text/javascript" src="js/mainContentDepartments.js"></script>
 		<script type="text/javascript" src="js/MainContentEmployees.js"></script>
 		<script type="text/javascript" src="js/checkUser.js"></script>
