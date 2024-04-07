@@ -66,6 +66,7 @@
 		<script type="text/javascript" src="js/variables.js"></script>
 		<script type="text/javascript" src="js/functions.js"></script>
 
+		<script type="text/javascript" src="js/modules/MVC/view/DOM/Tag.js"></script>
 		<script type="text/javascript" src="js/modules/MVC/view/DOM/Div.js"></script>
 		<script type="text/javascript" src="js/modules/MVC/view/DOM/Elem.js"></script> <!--Необходимо откорректировать (файлы: Avatar.js, )-->
 		<script type="text/javascript" src="js/modules/MVC/view/DOM/Form.js"></script>
@@ -79,6 +80,7 @@
 
 		<script type="text/javascript" src="js/modules/MVC/view/UI/Avatar.js"></script>
 		<script type="text/javascript" src="js/modules/MVC/view/UI/ProfileAvatar.js"></script>
+		<script type="text/javascript" src="js/modules/MVC/view/UI/LockUnlockDepartment.js"></script>
 
 		<script type="text/javascript" src="js/modules/MVC/view/UI/ButtonAddNewUser.js"></script>
 		<script type="text/javascript" src="js/modules/MVC/view/UI/ButtonChangeUser.js"></script>

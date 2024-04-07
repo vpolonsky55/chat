@@ -43,6 +43,7 @@
 	<script type="text/javascript" src="js/variables.js"></script>
 	<script type="text/javascript" src="js/functions.js"></script>
 
+	<script type="text/javascript" src="js/modules/MVC/view/DOM/Tag.js"></script>
 	<script type="text/javascript" src="js/modules/MVC/view/DOM/Div.js"></script>
 	<script type="text/javascript" src="js/modules/MVC/view/DOM/Elem.js"></script> <!--Необходимо откорректировать (файлы: Avatar.js, )-->
 	<script type="text/javascript" src="js/modules/MVC/view/DOM/Form.js"></script>
