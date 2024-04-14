@@ -1,6 +1,6 @@
 class Tag
 {
-    constructor(parent, selector, tagName = "div", id=0, value="None")
+    constructor(parent, selector, tagName="div", id=0, value="None")
 	{
         this.parent = parent;
 		this.selector = selector;
@@ -85,7 +85,6 @@ class Tag
 			}
 		)
 	}
-
 
 	getValue()
 	{

@@ -2,8 +2,7 @@
 
 let loop = setInterval(function()
 {
-	
-	if(click || document.cookie != "")
+		if(click || document.cookie != "")
 	{
 		setInterval("chatUpdate()", 1000)
 		clearInterval(loop)

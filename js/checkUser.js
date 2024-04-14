@@ -20,7 +20,7 @@ function selectItem(openContentAdmin)
 		{
 			content.remove()
 		}
-		mainContentDepartments = new MainContentDepartments(document.querySelector("body"), ".main-content")
+		mainContentDepartments = new MainContentDepartments(document.querySelector("body"), ".main-content", "")
 
 	} 
 }

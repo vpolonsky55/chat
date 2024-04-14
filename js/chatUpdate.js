@@ -22,7 +22,11 @@ function chatUpdate()
 				indexBlock=0
 				for (let i = lengthMessages-16; i < lengthMessages; i++) 
 				{	
-					fieldBlock.push(new Div (document.querySelector ('.field'),   (login==massage[`login${i}`])  ?  `#id${massage[`id${i}`]} .myFieldBlock `  :  `#id${massage[`id${i}`]} .fieldBlock`,  massage[`id${i}`], massage[`id${i}`] )   );
+					let paretntForFieldBlock = document.querySelector ('.field');
+					let selectorForFieldBlock = (login==massage[`login${i}`])  ?  `#id${massage[`id${i}`]} .myFieldBlock `  :  `#id${massage[`id${i}`]} .fieldBlock`;
+					let idForFieldBlock = massage[`id${i}`]
+					let valueForFieldBlock = massage[`id${i}`]
+					fieldBlock.push(new Div (paretntForFieldBlock,   selectorForFieldBlock,  idForFieldBlock,  valueForFieldBlock));
 					
 
 					// появление модального окна
