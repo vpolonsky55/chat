@@ -2,10 +2,16 @@ class Div extends Tag
 {
 	constructor(...args)
 	{
-		let parent = arguments[0];
-		let selector = arguments[1];
-		let id = arguments[2]
-		let value = arguments[3]
-		super(parent, selector, "div", id, value)
+		const PARENT_INDEX = 0,
+		SELECTOR_INDEX = 1,
+		TAG_NAME = "div",
+		ID_INDEX = 2,
+		VALUE_INDEX = 3 
+
+		let parent = arguments[PARENT_INDEX];
+		let selector = arguments[SELECTOR_INDEX];
+		let id = arguments[ID_INDEX]
+		let value = arguments[VALUE_INDEX]
+		super(parent, selector, TAG_NAME, id, value)
 	}
 }

@@ -1,3 +1,15 @@
+// class Elem extends Tag
+// {
+//   constructor(elementType)
+// 	{
+// 		let parent = arguments[0];
+// 		let selector = arguments[1];
+// 		let elementType = arguments[2]
+// 		super(parent, selector, "div", id, value)
+// 	}
+// }
+
+
 class Elem
 {
   constructor(parent, elementType, selector, id=0)

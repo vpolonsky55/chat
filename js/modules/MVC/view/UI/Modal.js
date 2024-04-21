@@ -10,7 +10,8 @@ class Modal
 	}
 	setText(text)
 	{
-		this.textarea.insertText(text);
+		this.textarea.setText(text);
+
 	}
 	modRem()
 	{
